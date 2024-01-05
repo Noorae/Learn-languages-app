@@ -16,4 +16,16 @@ module.exports = {
       });
     });
   },
+
+  close: () => {
+    return new Promise((resolve, reject) => {
+      pool.end((err) => {
+        if (err) {
+          reject(new Error("Unexpected error occured"));
+        } else {
+          resolve("Connection closed");
+        }
+      });
+    });
+  },
 };
