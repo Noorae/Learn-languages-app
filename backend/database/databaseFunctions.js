@@ -1,4 +1,19 @@
 const mysql = require("mysql");
 const pool = require("./databaseConnection.js");
 
-module.exports = {};
+module.exports = {
+  connect: () => {
+    return new Promise((resolve, reject) => {
+      console.log("Starting connection...");
+      pool.connect((err) => {
+        if (err) {
+          console.error("Error connecting to the database:", err);
+          reject(new Error("Unexpected error occured"));
+        } else {
+          console.log("Connected to the database");
+          resolve();
+        }
+      });
+    });
+  },
+};
