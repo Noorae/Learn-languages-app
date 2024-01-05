@@ -7,6 +7,7 @@ languagesRouter.get("/:language", async (req, res) => {
   try {
     //extract the language from the url
     const language = req.params.language;
+    console.log(language);
     const translations = await database.findAll(language);
     res.json(translations);
   } catch (err) {

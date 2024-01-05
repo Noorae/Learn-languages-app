@@ -10,9 +10,7 @@ app.use(express.json());
 
 app.use(cors());
 
-app.use("/api/languages/english", languagesRouter);
-app.use("/api/languages/swedish", languagesRouter);
-app.use("/api/languages/korean", languagesRouter);
+app.use("/api/languages/", languagesRouter);
 
 const server = app
   .listen(port, () => {

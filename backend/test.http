@@ -1,16 +1,22 @@
 get http://localhost:8080/
 
 ###
-get http://localhost:8080/api/languages
+get http://localhost:8080/api/languages/english
 
 ###
-get http://localhost:8080/api/languages/4
+get http://localhost:8080/api/languages/swedish
 
 ###
-delete http://localhost:8080/api/languages/3
+get http://localhost:8080/api/languages/korean
 
 ###
-post http://localhost:8080/api/languages/
+get http://localhost:8080/api/languages/english/4
+
+###
+delete http://localhost:8080/api/languages/swedish/3
+
+###
+post http://localhost:8080/api/languages/english
 content-type: application/json
 
-{ "english": "cat", "finnish": "kissa" }
+{ "english": "bird", "finnish": "lintu" }
