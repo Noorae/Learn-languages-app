@@ -28,4 +28,22 @@ module.exports = {
       });
     });
   },
+
+  //find all entries in a correct language table
+  findAll: (language) => {
+    return new Promise((resolve, reject) => {
+      //table name is based on the language
+      const table = `${language}_words`;
+      const sql = `SELECT CONNECTION_ID() AS ConnID, * from ??`;
+      //protect for sql injection
+      const values = [table];
+      pool.query(sql, values, (err, result) => {
+        if (err) {
+          reject(new Error("Unexpected error occured"));
+        }
+        console.log("Connection ID: " + result[0]["ConnID"]);
+        resolve(result);
+      });
+    });
+  },
 };
