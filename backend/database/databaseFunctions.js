@@ -68,4 +68,24 @@ module.exports = {
       });
     });
   },
+
+  //filterbytag
+  filterByValues: (tag, language) => {
+    return new Promise((resolve, reject) => {
+      const table = `${language}_words`;
+      const sql = `SELECT * FROM ?? WHERE tag = ?`;
+      const values = [table, tag];
+      pool.query(sql, values, (err, result) => {
+        if (err) {
+          reject(new Error("Unexpteced error occured"));
+        } else {
+          if (result.length === 0) {
+            resolve("Nothing found");
+          } else {
+            resolve(result);
+          }
+        }
+      });
+    });
+  },
 };
