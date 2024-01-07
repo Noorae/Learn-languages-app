@@ -46,4 +46,26 @@ module.exports = {
       });
     });
   },
+
+  //delete by id
+  deleteById: (id, language) => {
+    return new Promise((resolve, reject) => {
+      const table = `${language}_words`;
+      const sql = `DELETE FROM ?? WHERE id = ?`;
+      const values = [table, id];
+
+      pool.query(sql, values, (err, result) => {
+        if (err) {
+          reject(new Error("Unexpected error occured."));
+        } else {
+          if (result.affectedRows === 0) {
+            reject(new Error("Could not delete resource with id = " + id));
+          } else {
+            console.log("Deletion succesful");
+            resolve(result);
+          }
+        }
+      });
+    });
+  },
 };
