@@ -44,10 +44,13 @@ languagesRouter.post("/:language", async (req, res) => {
   try {
     //TO DO add validation here for the req body
     const language = req.params.language;
+    console.log(language);
+    console.log(req.body);
     const data = req.body;
     if (!data.tag) {
       data.tag = "NULL";
     }
+    console.log(data.tag);
     await database.save(data, language);
     res.status(201).json(req.body);
   } catch (err) {

@@ -93,9 +93,9 @@ module.exports = {
     return new Promise((resolve, reject) => {
       const table = `${language}_words`;
       const sql = `INSERT INTO ?? (foreign_language, fi, tag) VALUES (?, ?, ?)`;
-      const values = [data.foreign_language, data.fi, data.tag];
+      const values = [table, data.foreign_language, data.fi, data.tag];
 
-      connection.query(sql, values, (err, result) => {
+      pool.query(sql, values, (err, result) => {
         if (err) {
           reject(new Error("Error while saving"));
         } else {

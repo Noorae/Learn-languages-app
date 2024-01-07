@@ -19,4 +19,4 @@ delete http://localhost:8080/api/languages/swedish/3
 post http://localhost:8080/api/languages/english
 content-type: application/json
 
-{ "english": "bird", "finnish": "lintu" }
+{ "foreign_language": "bird", "fi": "lintu", "tag": "" }
