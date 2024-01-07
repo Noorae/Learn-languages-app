@@ -88,4 +88,20 @@ module.exports = {
       });
     });
   },
+
+  save: (language, data) => {
+    return new Promise((resolve, reject) => {
+      const table = `${language}_words`;
+      const sql = `INSERT INTO ?? (foreign_language, fi, tag) VALUES (?, ?, ?)`;
+      const values = [data.foreign_language, data.fi, data.tag];
+
+      connection.query(sql, values, (err, result) => {
+        if (err) {
+          reject(new Error("Error while saving"));
+        } else {
+          resolve(result);
+        }
+      });
+    });
+  },
 };
