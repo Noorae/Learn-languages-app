@@ -89,7 +89,7 @@ module.exports = {
     });
   },
 
-  save: (language, data) => {
+  save: (data, language) => {
     return new Promise((resolve, reject) => {
       const table = `${language}_words`;
       const sql = `INSERT INTO ?? (foreign_language, fi, tag) VALUES (?, ?, ?)`;
