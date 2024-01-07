@@ -27,4 +27,16 @@ languagesRouter.delete("/:language/:myId([0-9]+)", async (req, res) => {
   }
 });
 
+//filter by longitude, latitude
+languagesRouter.get("/:language/:tag", async (req, res) => {
+  try {
+    const language = req.params.language;
+    const tag = req.params.tag;
+    const filteredData = await database.filterByValues(tag, language);
+    res.json(filteredData);
+  } catch (err) {
+    res.status(404).json({ msg: err.message });
+  }
+});
+
 module.exports = languagesRouter;
