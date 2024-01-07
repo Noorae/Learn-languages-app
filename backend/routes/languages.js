@@ -39,4 +39,20 @@ languagesRouter.get("/:language/:tag", async (req, res) => {
   }
 });
 
+//add new word pair
+languagesRouter.post("/:language", async (req, res) => {
+  try {
+    //TO DO add validation here for the req body
+    const language = req.params.language;
+    const data = req.body;
+    if (!data.tag) {
+      data.tag = "NULL";
+    }
+    await database.save(data, language);
+    res.status(201).json(req.body);
+  } catch (err) {
+    res.status(500).json({ msg: err.message });
+  }
+});
+
 module.exports = languagesRouter;
