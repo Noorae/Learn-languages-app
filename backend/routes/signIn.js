@@ -1,6 +1,7 @@
 const database = require("../database/databaseFunctions.js");
 const express = require("express");
 const signInRouter = express.Router();
+const bcrypt = require("bcrypt");
 
 signInRouter.get("/:myUserName", async (req, res) => {
   try {
@@ -18,3 +19,23 @@ signInRouter.get("/:myUserName", async (req, res) => {
     res.status(500).json({ msg: err.message });
   }
 });
+
+signInRouter.post("/", async (req, res) => {
+  try {
+    //TO DO add validation here for the req body
+    const salt = await bcrypt.genSalt();
+    const hashedPassword = await bcrypt.hash(req.body.password, salt);
+    const data = {
+      username: req.body.username,
+      password: hashedPassword,
+      role: req.body.role,
+    };
+    console.log(data);
+    //TO DO await database.saveUserData(data);
+    res.status(201).json(req.body);
+  } catch (err) {
+    res.status(500).json({ msg: err.message });
+  }
+});
+
+module.exports = signInRouter;

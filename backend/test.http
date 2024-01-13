@@ -20,3 +20,10 @@ post http://localhost:8080/api/languages/english
 content-type: application/json
 
 { "foreign_language": "bird", "fi": "lintu", "tag": "" }
+
+###
+
+post http://localhost:8080/api/users
+content-type: application/json
+
+{ "username": "Anneli", "password": "shittyPassword", "role": "student"}
