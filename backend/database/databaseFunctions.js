@@ -104,4 +104,20 @@ module.exports = {
       });
     });
   },
+
+  saveUserData: (data) => {
+    return new Promise((resolve, reject) => {
+      const table = `learning_app_users`;
+      const sql = `INSERT INTO ?? (username, password, role) VALUES (?, ?, ?)`;
+      const values = [table, data.username, data.password, data.role];
+
+      pool.query(sql, values, (err, result) => {
+        if (err) {
+          reject(new Error("Error while saving"));
+        } else {
+          resolve(result);
+        }
+      });
+    });
+  },
 };
