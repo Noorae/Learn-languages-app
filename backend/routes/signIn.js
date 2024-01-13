@@ -30,7 +30,7 @@ signInRouter.post("/", async (req, res) => {
       role: req.body.role,
     };
     console.log(data);
-    //TO DO await database.saveUserData(data);
+    await database.saveUserData(data);
     res.status(201).json(req.body);
   } catch (err) {
     res.status(500).json({ msg: err.message });
