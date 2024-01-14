@@ -29,9 +29,16 @@ signInRouter.post("/", async (req, res) => {
       password: hashedPassword,
       role: req.body.role,
     };
-    console.log(data);
-    await database.saveUserData(data);
-    res.status(201).json(req.body);
+    const existingUser = await database.findByUserName(data.username);
+
+    console.log("Existing User:", existingUser);
+
+    if (existingUser.success) {
+      return res.status(200).json({ error: "Username already in use" });
+    } else {
+      await database.saveUserData(data);
+      res.status(201).json({ message: "User registered successfully" });
+    }
   } catch (err) {
     res.status(500).json({ msg: err.message });
   }

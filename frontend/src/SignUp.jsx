@@ -13,6 +13,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { postData } from "./Api.jsx";
+import { useState } from "react";
 
 function Copyright(props) {
   return (
@@ -37,7 +38,9 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function SignUp() {
-  const handleSubmit = (event) => {
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = {
       username: event.target.username.value,
@@ -46,7 +49,21 @@ export default function SignUp() {
     };
     console.log(data);
     try {
-      postData("/api/signup", data).then((res) => console.log(res));
+      const res = await postData("/api/signup", data);
+      if (res.message === "User registered successfully") {
+        // Successful signup
+        console.log("User registered successfully");
+        setErrorMessage("");
+      } else if (res.message == "Username already in use") {
+        // Username already in use
+        setErrorMessage(
+          "Username already in use. Please choose a different username."
+        );
+      } else {
+        // Handle other status codes if needed
+        console.log("Unexpected response status:", res.status);
+        setErrorMessage("An error occurred. Please try again.");
+      }
     } catch (error) {
       console.log("Error occured", error);
     }
@@ -107,6 +124,11 @@ export default function SignUp() {
             >
               Sign Up
             </Button>
+            {errorMessage && (
+              <Typography variant="body2" color="error" gutterBottom>
+                {errorMessage}
+              </Typography>
+            )}
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link href="/signin" variant="body2">

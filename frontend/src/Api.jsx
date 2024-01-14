@@ -21,13 +21,16 @@ export const postData = async (url, data) => {
       },
       body: JSON.stringify(data),
     });
-
-    if (!response.ok) {
+    console.log(response);
+    if (response.status === 201 || response.status === 200) {
+      // Handle successful response (status 201)
+      const responseData = await response.json();
+      console.log(responseData);
+      return responseData;
+    } else if (!response.ok) {
+      // Handle other error cases
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
-
-    const responseData = await response.json();
-    return responseData;
   } catch (error) {
     console.log("Error while posting data:", error);
     throw error;

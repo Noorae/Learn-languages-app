@@ -121,18 +121,25 @@ module.exports = {
     });
   },
 
-  findByUserName: (data) => {
+  findByUserName: (username) => {
     return new Promise((resolve, reject) => {
       const table = `learning_app_users`;
       const sql = `SELECT * FROM  ?? WHERE username=?`;
-      const values = [table, data.username];
+      const values = [table, username];
 
       pool.query(sql, values, (err, result) => {
         if (err) {
           reject(new Error("Error while quering data"));
         } else {
-          console.log(result);
-          resolve(result);
+          if (result.length > 0) {
+            console.log("Result came back with a matching name");
+            console.log(result);
+            resolve({ success: true });
+          } else {
+            console.log("No matches in the result");
+            console.log(result);
+            resolve({ success: false });
+          }
         }
       });
     });
