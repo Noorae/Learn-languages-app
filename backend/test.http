@@ -23,7 +23,7 @@ content-type: application/json
 
 ###
 
-post http://localhost:8080/api/users
+post http://localhost:8080/api/signup
 content-type: application/json
 
 { "username": "Anneli", "password": "shittyPassword", "role": "student"}

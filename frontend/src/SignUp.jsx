@@ -46,7 +46,7 @@ export default function SignUp() {
     };
     console.log(data);
     try {
-      postData("/signup", data).then((res) => console.log(res));
+      postData("/api/signup", data).then((res) => console.log(res));
     } catch (error) {
       console.log("Error occured", error);
     }
