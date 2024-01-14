@@ -120,4 +120,21 @@ module.exports = {
       });
     });
   },
+
+  findByUserName: (data) => {
+    return new Promise((resolve, reject) => {
+      const table = `learning_app_users`;
+      const sql = `SELECT * FROM  ?? WHERE username=?`;
+      const values = [table, data.username];
+
+      pool.query(sql, values, (err, result) => {
+        if (err) {
+          reject(new Error("Error while quering data"));
+        } else {
+          console.log(result);
+          resolve(result);
+        }
+      });
+    });
+  },
 };
