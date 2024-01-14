@@ -14,7 +14,7 @@ export const fetchData = async (url) => {
 
 export const postData = async (url, data) => {
   try {
-    const response = await fetch(url, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}${url}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

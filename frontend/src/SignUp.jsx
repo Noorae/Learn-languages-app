@@ -12,6 +12,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { postData } from "./Api.jsx";
 
 function Copyright(props) {
   return (
@@ -44,6 +45,11 @@ export default function SignUp() {
       role: "student",
     };
     console.log(data);
+    try {
+      postData("/signup", data).then((res) => console.log(res));
+    } catch (error) {
+      console.log("Error occured", error);
+    }
   };
 
   return (
