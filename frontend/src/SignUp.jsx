@@ -14,6 +14,7 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { postData } from "./Api.jsx";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Copyright(props) {
   return (
@@ -39,6 +40,7 @@ const defaultTheme = createTheme();
 
 export default function SignUp() {
   const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -54,6 +56,7 @@ export default function SignUp() {
         // Successful signup
         console.log("User registered successfully");
         setErrorMessage("");
+        navigate("/signin");
       } else if (res.error === "Username already in use") {
         // Username already in use
         setErrorMessage(
