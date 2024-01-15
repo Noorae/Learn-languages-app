@@ -35,14 +35,37 @@ function Copyright(props) {
 
 const defaultTheme = createTheme();
 
-export default function SignIn() {
-  const handleSubmit = (event) => {
+export default function SignUp() {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    const data = {
+      username: event.target.username.value,
+      password: event.target.password.value,
+    };
+    console.log(data);
+    try {
+      const res = await postData("/api/users/signin", data);
+      if (res.token !== null) {
+        // Successful login
+        const { token } = res;
+
+        // Save token to localStorage
+        localStorage.setItem("token", token);
+
+        console.log("User signed in");
+        setErrorMessage("");
+        navigate("/dashboard");
+      } else if (res.token === NULL) {
+        // Username already in use
+        setErrorMessage("Error while logging in, please try again.");
+      } else {
+        // Handle other status codes if needed
+        console.log("Unexpected response status:", res.status);
+        setErrorMessage("An error occurred. Please try again.");
+      }
+    } catch (error) {
+      console.log("Error occured", error);
+    }
   };
 
   return (
@@ -73,10 +96,10 @@ export default function SignIn() {
               margin="normal"
               required
               fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
+              id="username"
+              label="Username"
+              name="username"
+              autoComplete="username"
               autoFocus
             />
             <TextField
