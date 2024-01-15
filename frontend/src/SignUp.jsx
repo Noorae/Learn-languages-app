@@ -49,7 +49,7 @@ export default function SignUp() {
     };
     console.log(data);
     try {
-      const res = await postData("/api/signup", data);
+      const res = await postData("/api/users/signup", data);
       if (res.message === "User registered successfully") {
         // Successful signup
         console.log("User registered successfully");

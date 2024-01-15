@@ -12,8 +12,7 @@ app.use(express.json());
 app.use(cors());
 
 app.use("/api/languages/", languagesRouter);
-app.use("/api/signup/", signInRouter);
-app.use("/api/login", signInRouter);
+app.use("/api/users/", signInRouter);
 
 const server = app
   .listen(port, () => {

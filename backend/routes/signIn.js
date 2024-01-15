@@ -20,7 +20,7 @@ signInRouter.get("/:myUserName", async (req, res) => {
   }
 });
 
-signInRouter.post("/", async (req, res) => {
+signInRouter.post("/signup", async (req, res) => {
   try {
     //TO DO add validation here for the req body
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
