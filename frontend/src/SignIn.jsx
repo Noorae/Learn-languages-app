@@ -12,6 +12,9 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { postData } from "./Api";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 function Copyright(props) {
   return (
@@ -35,7 +38,10 @@ function Copyright(props) {
 
 const defaultTheme = createTheme();
 
-export default function SignUp() {
+export default function Login() {
+  const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = {
@@ -44,18 +50,19 @@ export default function SignUp() {
     };
     console.log(data);
     try {
-      const res = await postData("/api/users/signin", data);
-      if (res.token !== null) {
+      const res = await postData("/api/users/login", data);
+      console.log(res);
+      if (res.acessToken !== null) {
         // Successful login
-        const { token } = res;
+        const { acesstoken } = res;
 
         // Save token to localStorage
-        localStorage.setItem("token", token);
+        localStorage.setItem("token", acesstoken);
 
         console.log("User signed in");
         setErrorMessage("");
         navigate("/dashboard");
-      } else if (res.token === NULL) {
+      } else if (res.acesstoken === NULL) {
         // Username already in use
         setErrorMessage("Error while logging in, please try again.");
       } else {
