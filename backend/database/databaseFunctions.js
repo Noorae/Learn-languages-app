@@ -133,8 +133,9 @@ module.exports = {
         } else {
           if (result.length > 0) {
             console.log("Result came back with a matching name");
-            console.log(result);
-            resolve(result);
+            const [match] = result;
+            console.log(match);
+            resolve(match);
           } else {
             console.log("No matches in the result");
             console.log(result);

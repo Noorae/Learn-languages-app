@@ -1,7 +1,10 @@
+require("dotenv").config({ path: "../.env" });
+
 const database = require("../database/databaseFunctions.js");
 const express = require("express");
 const signInRouter = express.Router();
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 signInRouter.get("/:myUserName", async (req, res) => {
   try {
@@ -45,19 +48,29 @@ signInRouter.post("/signup", async (req, res) => {
 });
 
 signInRouter.post("/login", async (req, res) => {
-  const existingUser = await database.findByUserName(req.body.username);
-  console.log(`Test if user was found${existingUser}`);
-
-  if (existingUser == null) {
-    return res.status(400).send("User not found");
-  }
-
   try {
-    if (bcrypt.compare(req.body.password, existingUser.password)) {
-      res.send("Successfull login");
-    } else {
+    const existingUser = await database.findByUserName(req.body.username);
+    console.log(`Test if user was found${existingUser}`);
+
+    if (existingUser == null) {
+      return res.status(400).send("User not found");
+    }
+
+    const passwordMatch = await bcrypt.compare(
+      req.body.password,
+      existingUser.password
+    );
+
+    console.log(`password was match: ${passwordMatch}`);
+    if (!passwordMatch) {
       res.send("Unsuccesful login");
     }
+
+    const username = req.body.username;
+    const user = { name: username };
+
+    const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
+    res.json({ acessToken: accessToken });
   } catch {
     res.status(500).send();
   }
