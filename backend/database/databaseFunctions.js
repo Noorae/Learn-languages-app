@@ -134,11 +134,11 @@ module.exports = {
           if (result.length > 0) {
             console.log("Result came back with a matching name");
             console.log(result);
-            resolve({ success: true });
+            resolve(result);
           } else {
             console.log("No matches in the result");
             console.log(result);
-            resolve({ success: false });
+            resolve(null);
           }
         }
       });

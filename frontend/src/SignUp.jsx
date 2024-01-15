@@ -54,7 +54,7 @@ export default function SignUp() {
         // Successful signup
         console.log("User registered successfully");
         setErrorMessage("");
-      } else if (res.message == "Username already in use") {
+      } else if (res.error === "Username already in use") {
         // Username already in use
         setErrorMessage(
           "Username already in use. Please choose a different username."

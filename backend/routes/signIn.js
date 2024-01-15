@@ -33,7 +33,7 @@ signInRouter.post("/", async (req, res) => {
 
     console.log("Existing User:", existingUser);
 
-    if (existingUser.success) {
+    if (existingUser) {
       return res.status(200).json({ error: "Username already in use" });
     } else {
       await database.saveUserData(data);
