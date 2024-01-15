@@ -23,7 +23,14 @@ content-type: application/json
 
 ###
 
-post http://localhost:8080/api/signup
+post http://localhost:8080/api/users/signup
 content-type: application/json
 
-{ "username": "Anneli", "password": "shittyPassword", "role": "student"}
+{ "username": "Ulla", "password": "shittyPassword", "role": "student"}
+
+###
+
+post http://localhost:8080/api/users/login
+content-type: application/json
+
+{ "username": "Ulla", "password": "shittyPassword", "role": "student"}

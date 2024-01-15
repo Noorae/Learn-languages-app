@@ -44,4 +44,23 @@ signInRouter.post("/signup", async (req, res) => {
   }
 });
 
+signInRouter.post("/login", async (req, res) => {
+  const existingUser = await database.findByUserName(req.body.username);
+  console.log(`Test if user was found${existingUser}`);
+
+  if (existingUser == null) {
+    return res.status(400).send("User not found");
+  }
+
+  try {
+    if (bcrypt.compare(req.body.password, existingUser.password)) {
+      res.send("Successfull login");
+    } else {
+      res.send("Unsuccesful login");
+    }
+  } catch {
+    res.status(500).send();
+  }
+});
+
 module.exports = signInRouter;
