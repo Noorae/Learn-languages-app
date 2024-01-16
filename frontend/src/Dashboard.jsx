@@ -14,10 +14,12 @@ import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Link from "@mui/material/Link";
+import Button from "@mui/material/Button";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { useAuth } from "./AuthContext";
+import { useNavigate } from "react-router-dom";
 
 function Copyright(props) {
   return (
@@ -87,9 +89,15 @@ const Drawer = styled(MuiDrawer, {
 const defaultTheme = createTheme();
 
 export default function Dashboard() {
+  const navigate = useNavigate();
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
+  };
+
+  const handleLogOut = () => {
+    localStorage.removeItem("token");
+    navigate("/signin");
   };
 
   return (
@@ -135,14 +143,18 @@ export default function Dashboard() {
             sx={{
               display: "flex",
               alignItems: "center",
-              justifyContent: "flex-end",
+              justifyContent: "space-between",
               px: [1],
             }}
           >
+            <Button variant="contained" onClick={handleLogOut}>
+              LOG OUT
+            </Button>
             <IconButton onClick={toggleDrawer}>
               <ChevronLeftIcon />
             </IconButton>
           </Toolbar>
+
           <Divider />
           <List component="nav">
             <Divider sx={{ my: 1 }} />
