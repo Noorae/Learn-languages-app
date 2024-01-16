@@ -6,6 +6,8 @@ import Box from "@mui/material/Box";
 import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
@@ -18,6 +20,11 @@ import Button from "@mui/material/Button";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
+import Accordion from "@mui/material/Accordion";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { useAuth } from "./AuthContext";
 import { useNavigate } from "react-router-dom";
 
@@ -156,7 +163,76 @@ export default function Dashboard() {
           </Toolbar>
 
           <Divider />
+
           <List component="nav">
+            <Accordion elevation={0}>
+              <AccordionSummary
+                expandIcon={<ArrowDownwardIcon />}
+                aria-controls="panel1-content"
+                id="panel1-header"
+              >
+                <Typography>English</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <List>
+                  <ListItem button>
+                    <ListItemText primary="All words" />
+                  </ListItem>
+                  <ListItem button>
+                    <ListItemText primary="Item 2" />
+                  </ListItem>
+                  <ListItem button>
+                    <ListItemText primary="Item 3" />
+                  </ListItem>
+                </List>
+              </AccordionDetails>
+            </Accordion>
+            <Divider sx={{ my: 1 }} />
+            <Accordion elevation={0}>
+              <AccordionSummary
+                expandIcon={<ArrowDownwardIcon />}
+                aria-controls="panel1-content"
+                id="panel1-header"
+              >
+                <Typography>Swedish</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <List>
+                  <ListItem button>
+                    <ListItemText primary="All words" />
+                  </ListItem>
+                  <ListItem button>
+                    <ListItemText primary="Item 2" />
+                  </ListItem>
+                  <ListItem button>
+                    <ListItemText primary="Item 3" />
+                  </ListItem>
+                </List>
+              </AccordionDetails>
+            </Accordion>
+            <Divider sx={{ my: 1 }} />
+            <Accordion elevation={0}>
+              <AccordionSummary
+                expandIcon={<ArrowDownwardIcon />}
+                aria-controls="panel1-content"
+                id="panel1-header"
+              >
+                <Typography>Korean</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <List>
+                  <ListItem button>
+                    <ListItemText primary="All words" />
+                  </ListItem>
+                  <ListItem button>
+                    <ListItemText primary="Item 2" />
+                  </ListItem>
+                  <ListItem button>
+                    <ListItemText primary="Item 3" />
+                  </ListItem>
+                </List>
+              </AccordionDetails>
+            </Accordion>
             <Divider sx={{ my: 1 }} />
           </List>
         </Drawer>
