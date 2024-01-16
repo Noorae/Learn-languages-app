@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useEffect, useState } from "react";
 import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import MuiDrawer from "@mui/material/Drawer";
@@ -27,6 +28,7 @@ import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { useAuth } from "./AuthContext";
 import { useNavigate } from "react-router-dom";
+import { fetchData } from "./Api.jsx";
 
 function Copyright(props) {
   return (
@@ -96,11 +98,60 @@ const Drawer = styled(MuiDrawer, {
 const defaultTheme = createTheme();
 
 export default function Dashboard() {
+  const [engData, setEngData] = useState([]);
+  const [swedishData, setSwedishData] = useState([]);
+  const [koreanData, setKoreanData] = useState([]);
+  const [engTags, setEngTags] = useState([]);
+  const [swedishTags, setSwedishTags] = useState([]);
+  const [koreanTags, setKoreanTags] = useState([]);
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
   };
+
+  const fetchLanguageData = async () => {
+    try {
+      const [eng, swedish, korean] = await Promise.all([
+        fetchData("/api/languages/english"),
+        fetchData("/api/languages/swedish"),
+        fetchData("/api/languages/korean"),
+      ]);
+
+      setEngData(eng);
+      setEngTags([
+        ...new Set(
+          eng
+            .map((word) => word.tag)
+            .filter((tag) => tag !== null && tag !== "NULL")
+        ),
+      ]);
+
+      setSwedishData(swedish);
+      setSwedishTags([
+        ...new Set(
+          swedish
+            .map((word) => word.tag)
+            .filter((tag) => tag !== null && tag !== "NULL")
+        ),
+      ]);
+
+      setKoreanData(korean);
+      setKoreanTags([
+        ...new Set(
+          korean
+            .map((word) => word.tag)
+            .filter((tag) => tag !== null && tag !== "NULL")
+        ),
+      ]);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchLanguageData();
+  }, []);
 
   const handleLogOut = () => {
     localStorage.removeItem("token");
@@ -178,12 +229,12 @@ export default function Dashboard() {
                   <ListItem button>
                     <ListItemText primary="All words" />
                   </ListItem>
-                  <ListItem button>
-                    <ListItemText primary="Item 2" />
-                  </ListItem>
-                  <ListItem button>
-                    <ListItemText primary="Item 3" />
-                  </ListItem>
+                  {engTags &&
+                    engTags.map((tag) => (
+                      <ListItem button key={tag}>
+                        <ListItemText primary={tag} />
+                      </ListItem>
+                    ))}
                 </List>
               </AccordionDetails>
             </Accordion>
@@ -201,12 +252,12 @@ export default function Dashboard() {
                   <ListItem button>
                     <ListItemText primary="All words" />
                   </ListItem>
-                  <ListItem button>
-                    <ListItemText primary="Item 2" />
-                  </ListItem>
-                  <ListItem button>
-                    <ListItemText primary="Item 3" />
-                  </ListItem>
+                  {swedishTags &&
+                    swedishTags.map((tag) => (
+                      <ListItem button key={tag}>
+                        <ListItemText primary={tag} />
+                      </ListItem>
+                    ))}
                 </List>
               </AccordionDetails>
             </Accordion>
@@ -224,12 +275,12 @@ export default function Dashboard() {
                   <ListItem button>
                     <ListItemText primary="All words" />
                   </ListItem>
-                  <ListItem button>
-                    <ListItemText primary="Item 2" />
-                  </ListItem>
-                  <ListItem button>
-                    <ListItemText primary="Item 3" />
-                  </ListItem>
+                  {koreanTags &&
+                    koreanTags.map((tag) => (
+                      <ListItem button key={tag}>
+                        <ListItemText primary={tag} />
+                      </ListItem>
+                    ))}
                 </List>
               </AccordionDetails>
             </Accordion>

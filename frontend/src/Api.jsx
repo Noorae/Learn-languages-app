@@ -1,6 +1,6 @@
 export const fetchData = async (url) => {
   try {
-    const response = await fetch(url);
+    const response = await fetch(`${import.meta.env.VITE_API_URL}${url}`);
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
