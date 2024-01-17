@@ -106,6 +106,7 @@ export default function Dashboard() {
   const [engTags, setEngTags] = useState([]);
   const [swedishTags, setSwedishTags] = useState([]);
   const [koreanTags, setKoreanTags] = useState([]);
+  const [quiz, setQuiz] = useState([]);
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
@@ -229,12 +230,12 @@ export default function Dashboard() {
               <AccordionDetails>
                 <List>
                   <ListItem button>
-                    <ListItemText primary="All words" />
+                    <Button variant="text">All words</Button>
                   </ListItem>
                   {engTags &&
                     engTags.map((tag) => (
                       <ListItem button key={tag}>
-                        <ListItemText primary={tag} />
+                        <Button variant="text">{tag}</Button>
                       </ListItem>
                     ))}
                 </List>
@@ -251,13 +252,13 @@ export default function Dashboard() {
               </AccordionSummary>
               <AccordionDetails>
                 <List>
-                  <ListItem button>
-                    <ListItemText primary="All words" />
+                  <ListItem>
+                    <Button variant="text">All words</Button>
                   </ListItem>
                   {swedishTags &&
                     swedishTags.map((tag) => (
-                      <ListItem button key={tag}>
-                        <ListItemText primary={tag} />
+                      <ListItem key={tag}>
+                        <Button variant="text">{tag}</Button>
                       </ListItem>
                     ))}
                 </List>
@@ -274,13 +275,13 @@ export default function Dashboard() {
               </AccordionSummary>
               <AccordionDetails>
                 <List>
-                  <ListItem button>
-                    <ListItemText primary="All words" />
+                  <ListItem>
+                    <Button variant="text">All words</Button>
                   </ListItem>
                   {koreanTags &&
                     koreanTags.map((tag) => (
                       <ListItem button key={tag}>
-                        <ListItemText primary={tag} />
+                        <Button variant="text">{tag}</Button>
                       </ListItem>
                     ))}
                 </List>
@@ -304,7 +305,7 @@ export default function Dashboard() {
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
-              {/* Chart */}
+              {/* Quiz */}
               <Grid item xs={12} md={8} lg={9}>
                 <Paper
                   sx={{
@@ -315,7 +316,7 @@ export default function Dashboard() {
                   }}
                 ></Paper>
               </Grid>
-              {/* Recent Deposits */}
+              {/* Switch */}
               <Grid item xs={12} md={4} lg={3}>
                 <Paper
                   sx={{
@@ -323,8 +324,8 @@ export default function Dashboard() {
                     display: "flex",
                     flexDirection: "column",
                     height: 240,
-                    justifyContent: "center", // Center content vertically
-                    alignItems: "center", // Center content horizontally
+                    justifyContent: "center",
+                    alignItems: "center",
                   }}
                 >
                   <FormControlLabel
@@ -345,11 +346,14 @@ export default function Dashboard() {
                   </Typography>
                 </Paper>
               </Grid>
-              {/* Recent Orders */}
+              {/* Results */}
               <Grid item xs={12}>
-                <Paper
-                  sx={{ p: 2, display: "flex", flexDirection: "column" }}
-                ></Paper>
+                <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
+                  {" "}
+                  <Typography sx={{ textAlign: "center" }}>
+                    You scored:
+                  </Typography>
+                </Paper>
               </Grid>
             </Grid>
             <Copyright sx={{ pt: 4 }} />
