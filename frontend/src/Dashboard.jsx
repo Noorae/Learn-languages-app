@@ -110,6 +110,8 @@ export default function Dashboard() {
   const [quiz, setQuiz] = useState([]);
   const [quizLang, setQuizLang] = useState("fi");
   const [checked, setChecked] = useState(true);
+  const [score, setScore] = useState([]);
+  const [userAnswers, setUserAnswers] = useState([]);
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
@@ -181,6 +183,31 @@ export default function Dashboard() {
     } else {
       setting("foreign_language", () => console.log(quizLang));
     }
+  };
+
+  const handleSubmitQuiz = () => {
+    // Score calculation using userAnswers state
+    let score = 0;
+    quiz.forEach((wordPair, index) => {
+      const userAnswer = userAnswers[index]?.toLowerCase();
+      const correctAnswerField =
+        quizLang === "fi" ? "foreign_language" : quizLang;
+
+      const correctAnswer = wordPair[correctAnswerField]?.toLowerCase();
+
+      if (userAnswer === correctAnswer) {
+        score++;
+      }
+    });
+
+    setScore(score);
+    console.log(`You got ${score} points hurray`);
+
+    setUserAnswers([]);
+  };
+
+  const handleAnswersSubmit = (answers) => {
+    setUserAnswers(answers);
   };
 
   function setting(language, callback) {
@@ -406,18 +433,24 @@ export default function Dashboard() {
                     alignItems: "center",
                   }}
                 >
-                  {" "}
-                  <Typography sx={{ textAlign: "center" }}>
-                    You scored:
-                  </Typography>
+                  {score !== null ? (
+                    <Typography sx={{ textAlign: "center" }}>
+                      You scored: {score} points
+                    </Typography>
+                  ) : null}
                 </Paper>
               </Grid>
               {/* The quiz */}
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
                   {" "}
-                  <Quiz quiz={quiz} toggleQuizLang={quizLang} />
+                  <Quiz
+                    quiz={quiz}
+                    toggleQuizLang={quizLang}
+                    onSubmitAnswers={handleAnswersSubmit}
+                  />
                   <Button
+                    onClick={handleSubmitQuiz}
                     sx={{
                       marginLeft: 30,
                       marginRight: 30,

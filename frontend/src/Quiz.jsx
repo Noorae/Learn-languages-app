@@ -6,9 +6,17 @@ import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import { Typography, TextField } from "@mui/material";
 
-const Quiz = ({ quiz, toggleQuizLang }) => {
-  console.log(quiz);
-  console.log(toggleQuizLang);
+const Quiz = ({ quiz, toggleQuizLang, onSubmitAnswers }) => {
+  const [userAnswers, setUserAnswers] = useState([]);
+
+  const handleAnswerChange = (index, value) => {
+    const updatedAnswers = [...userAnswers];
+    updatedAnswers[index] = value;
+    setUserAnswers(updatedAnswers);
+
+    onSubmitAnswers(updatedAnswers);
+  };
+
   return (
     <Paper>
       <Grid
@@ -45,6 +53,8 @@ const Quiz = ({ quiz, toggleQuizLang }) => {
                   id="outlined-basic"
                   label="Guess word"
                   variant="outlined"
+                  value={userAnswers[index] || ""}
+                  onChange={(e) => handleAnswerChange(index, e.target.value)}
                 />
               </Grid>
             </Grid>
