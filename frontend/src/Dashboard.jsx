@@ -31,6 +31,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import { useAuth } from "./AuthContext";
 import { useNavigate } from "react-router-dom";
 import { fetchData } from "./Api.jsx";
+import Quiz from "./Quiz.jsx";
 
 function Copyright(props) {
   return (
@@ -107,6 +108,7 @@ export default function Dashboard() {
   const [swedishTags, setSwedishTags] = useState([]);
   const [koreanTags, setKoreanTags] = useState([]);
   const [quiz, setQuiz] = useState([]);
+  const [quizLang, setQuizLang] = useState([]);
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
@@ -364,7 +366,7 @@ export default function Dashboard() {
                     control={
                       <Switch
                         sx={{
-                          transform: "scale(1.5)", // Adjust the scale factor as needed
+                          transform: "scale(1.5)",
                         }}
                         color="secondary"
                       />
@@ -399,6 +401,7 @@ export default function Dashboard() {
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
                   {" "}
+                  <Quiz quiz={quiz} toggleQuizLang={quizLang} />
                 </Paper>
               </Grid>
             </Grid>
