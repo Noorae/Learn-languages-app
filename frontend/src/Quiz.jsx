@@ -5,16 +5,35 @@ import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import { Typography, TextField } from "@mui/material";
+import Button from "@mui/material/Button";
 
-const Quiz = ({ quiz, toggleQuizLang, onSubmitAnswers }) => {
+const Quiz = ({ quiz, toggleQuizLang, onScoreUpdate }) => {
   const [userAnswers, setUserAnswers] = useState([]);
 
   const handleAnswerChange = (index, value) => {
     const updatedAnswers = [...userAnswers];
     updatedAnswers[index] = value;
     setUserAnswers(updatedAnswers);
+  };
 
-    onSubmitAnswers(updatedAnswers);
+  const handleSubmit = () => {
+    let score = 0;
+    quiz.forEach((wordPair, index) => {
+      const userAnswer = userAnswers[index].toLowerCase();
+      console.log("toggleQuizLang value:", toggleQuizLang);
+      const correctAnswerField =
+        toggleQuizLang === "fi" ? "foreign_language" : toggleQuizLang;
+      console.log(correctAnswerField);
+
+      const correctAnswer = wordPair[correctAnswerField]?.toLowerCase();
+
+      if (userAnswer === correctAnswer) {
+        score++;
+      }
+    });
+
+    onScoreUpdate(score);
+    setUserAnswers([]);
   };
 
   return (
@@ -59,6 +78,18 @@ const Quiz = ({ quiz, toggleQuizLang, onSubmitAnswers }) => {
               </Grid>
             </Grid>
           ))}
+        <Button
+          onClick={handleSubmit}
+          sx={{
+            marginLeft: 30,
+            marginRight: 30,
+            marginTop: 10,
+            marginBottom: 1,
+          }}
+          variant="contained"
+        >
+          Submit quiz
+        </Button>
       </Grid>
     </Paper>
   );

@@ -111,7 +111,6 @@ export default function Dashboard() {
   const [quizLang, setQuizLang] = useState("fi");
   const [checked, setChecked] = useState(true);
   const [score, setScore] = useState([]);
-  const [userAnswers, setUserAnswers] = useState([]);
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
@@ -185,29 +184,9 @@ export default function Dashboard() {
     }
   };
 
-  const handleSubmitQuiz = () => {
-    // Score calculation using userAnswers state
-    let score = 0;
-    quiz.forEach((wordPair, index) => {
-      const userAnswer = userAnswers[index]?.toLowerCase();
-      const correctAnswerField =
-        quizLang === "fi" ? "foreign_language" : quizLang;
-
-      const correctAnswer = wordPair[correctAnswerField]?.toLowerCase();
-
-      if (userAnswer === correctAnswer) {
-        score++;
-      }
-    });
-
-    setScore(score);
+  const handleScoreUpdate = (score) => {
     console.log(`You got ${score} points hurray`);
-
-    setUserAnswers([]);
-  };
-
-  const handleAnswersSubmit = (answers) => {
-    setUserAnswers(answers);
+    setScore(score);
   };
 
   function setting(language, callback) {
@@ -447,20 +426,8 @@ export default function Dashboard() {
                   <Quiz
                     quiz={quiz}
                     toggleQuizLang={quizLang}
-                    onSubmitAnswers={handleAnswersSubmit}
+                    onScoreUpdate={handleScoreUpdate}
                   />
-                  <Button
-                    onClick={handleSubmitQuiz}
-                    sx={{
-                      marginLeft: 30,
-                      marginRight: 30,
-                      marginTop: 10,
-                      marginBottom: 1,
-                    }}
-                    variant="contained"
-                  >
-                    Submit quiz
-                  </Button>
                 </Paper>
               </Grid>
             </Grid>
