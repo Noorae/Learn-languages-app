@@ -417,6 +417,17 @@ export default function Dashboard() {
                 <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
                   {" "}
                   <Quiz quiz={quiz} toggleQuizLang={quizLang} />
+                  <Button
+                    sx={{
+                      marginLeft: 30,
+                      marginRight: 30,
+                      marginTop: 10,
+                      marginBottom: 1,
+                    }}
+                    variant="contained"
+                  >
+                    Submit quiz
+                  </Button>
                 </Paper>
               </Grid>
             </Grid>
