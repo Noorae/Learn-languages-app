@@ -26,6 +26,8 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import Switch from "@mui/material/Switch";
+import FormControlLabel from "@mui/material/FormControlLabel";
 import { useAuth } from "./AuthContext";
 import { useNavigate } from "react-router-dom";
 import { fetchData } from "./Api.jsx";
@@ -321,8 +323,27 @@ export default function Dashboard() {
                     display: "flex",
                     flexDirection: "column",
                     height: 240,
+                    justifyContent: "center", // Center content vertically
+                    alignItems: "center", // Center content horizontally
                   }}
-                ></Paper>
+                >
+                  <FormControlLabel
+                    value="bottom"
+                    control={
+                      <Switch
+                        sx={{
+                          transform: "scale(1.5)", // Adjust the scale factor as needed
+                        }}
+                        color="secondary"
+                      />
+                    }
+                    label="Switch the language"
+                    labelPlacement="top"
+                  />
+                  <Typography sx={{ textAlign: "center" }}>
+                    FI to Eng
+                  </Typography>
+                </Paper>
               </Grid>
               {/* Recent Orders */}
               <Grid item xs={12}>
