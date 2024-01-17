@@ -17,13 +17,19 @@ const Quiz = ({ quiz, toggleQuizLang, onScoreUpdate }) => {
   };
 
   const handleSubmit = () => {
+    console.log(quiz);
     let score = 0;
+    const currentToggleQuizLang = toggleQuizLang;
+    console.log("Current toggleQuizLang value:", currentToggleQuizLang);
+
     quiz.forEach((wordPair, index) => {
       const userAnswer = userAnswers[index].toLowerCase();
-      console.log("toggleQuizLang value:", toggleQuizLang);
+      console.log("toggleQuizLang value during loop:", currentToggleQuizLang);
+
       const correctAnswerField =
-        toggleQuizLang === "fi" ? "foreign_language" : toggleQuizLang;
-      console.log(correctAnswerField);
+        currentToggleQuizLang === "fi" ? "foreign_language" : "fi";
+
+      console.log("correctAnswerField:", correctAnswerField);
 
       const correctAnswer = wordPair[correctAnswerField]?.toLowerCase();
 

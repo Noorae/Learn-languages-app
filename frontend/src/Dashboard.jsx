@@ -176,23 +176,22 @@ export default function Dashboard() {
   };
 
   const handleChange = (event) => {
-    setChecked(event.target.checked);
-    if (checked) {
-      setting("fi", () => console.log(quizLang));
-    } else {
-      setting("foreign_language", () => console.log(quizLang));
-    }
-  };
+    const isChecked = event.target.checked;
+    setChecked(isChecked);
 
-  const handleScoreUpdate = (score) => {
-    console.log(`You got ${score} points hurray`);
-    setScore(score);
+    const newLang = isChecked ? "fi" : "foreign_language";
+    setting(newLang, () => console.log(quizLang));
   };
 
   function setting(language, callback) {
     setQuizLang(language);
     callback();
   }
+
+  const handleScoreUpdate = (score) => {
+    console.log(`You got ${score} points hurray`);
+    setScore(score);
+  };
 
   return (
     <ThemeProvider theme={defaultTheme}>
