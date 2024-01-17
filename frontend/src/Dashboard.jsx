@@ -347,19 +347,8 @@ export default function Dashboard() {
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
-              {/* Quiz */}
-              <Grid item xs={12} md={8} lg={9}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: "flex",
-                    flexDirection: "column",
-                    height: 240,
-                  }}
-                ></Paper>
-              </Grid>
-              {/* Switch */}
-              <Grid item xs={12} md={4} lg={3}>
+              {/* Switch language toggle */}
+              <Grid item xs={12} md={6} lg={9}>
                 <Paper
                   sx={{
                     p: 2,
@@ -388,13 +377,28 @@ export default function Dashboard() {
                   </Typography>
                 </Paper>
               </Grid>
-              {/* Results */}
-              <Grid item xs={12}>
-                <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
+              {/* Scores */}
+              <Grid item xs={12} md={6} lg={3}>
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: "flex",
+                    flexDirection: "column",
+                    height: 240,
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
                   {" "}
                   <Typography sx={{ textAlign: "center" }}>
                     You scored:
                   </Typography>
+                </Paper>
+              </Grid>
+              {/* The quiz */}
+              <Grid item xs={12}>
+                <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
+                  {" "}
                 </Paper>
               </Grid>
             </Grid>
