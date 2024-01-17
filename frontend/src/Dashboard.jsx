@@ -161,6 +161,18 @@ export default function Dashboard() {
     navigate("/signin");
   };
 
+  const handleLoadQuiz = (langData, tag) => {
+    if (tag === "allWords") {
+      setQuiz(langData);
+    } else {
+      const filteredLangData = langData
+        .map((word) => word)
+        .filter((word) => word.tag === tag);
+      setQuiz(filteredLangData);
+      console.log(quiz);
+    }
+  };
+
   return (
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: "flex" }}>
@@ -229,13 +241,23 @@ export default function Dashboard() {
               </AccordionSummary>
               <AccordionDetails>
                 <List>
-                  <ListItem button>
-                    <Button variant="text">All words</Button>
+                  <ListItem>
+                    <Button
+                      onClick={() => handleLoadQuiz(engData, "allWords")}
+                      variant="text"
+                    >
+                      All words
+                    </Button>
                   </ListItem>
                   {engTags &&
                     engTags.map((tag) => (
-                      <ListItem button key={tag}>
-                        <Button variant="text">{tag}</Button>
+                      <ListItem key={tag}>
+                        <Button
+                          onClick={() => handleLoadQuiz(engData, tag)}
+                          variant="text"
+                        >
+                          {tag}
+                        </Button>
                       </ListItem>
                     ))}
                 </List>
@@ -253,12 +275,22 @@ export default function Dashboard() {
               <AccordionDetails>
                 <List>
                   <ListItem>
-                    <Button variant="text">All words</Button>
+                    <Button
+                      onClick={() => handleLoadQuiz(swedishData, "allWords")}
+                      variant="text"
+                    >
+                      All words
+                    </Button>
                   </ListItem>
                   {swedishTags &&
                     swedishTags.map((tag) => (
                       <ListItem key={tag}>
-                        <Button variant="text">{tag}</Button>
+                        <Button
+                          onClick={() => handleLoadQuiz(swedishData, tag)}
+                          variant="text"
+                        >
+                          {tag}
+                        </Button>
                       </ListItem>
                     ))}
                 </List>
@@ -276,12 +308,22 @@ export default function Dashboard() {
               <AccordionDetails>
                 <List>
                   <ListItem>
-                    <Button variant="text">All words</Button>
+                    <Button
+                      onClick={() => handleLoadQuiz(koreanData, "allWords")}
+                      variant="text"
+                    >
+                      All words
+                    </Button>
                   </ListItem>
                   {koreanTags &&
                     koreanTags.map((tag) => (
-                      <ListItem button key={tag}>
-                        <Button variant="text">{tag}</Button>
+                      <ListItem key={tag}>
+                        <Button
+                          onClick={() => handleLoadQuiz(koreanData, "tag")}
+                          variant="text"
+                        >
+                          {tag}
+                        </Button>
                       </ListItem>
                     ))}
                 </List>
