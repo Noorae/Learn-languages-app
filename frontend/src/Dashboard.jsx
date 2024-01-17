@@ -108,7 +108,8 @@ export default function Dashboard() {
   const [swedishTags, setSwedishTags] = useState([]);
   const [koreanTags, setKoreanTags] = useState([]);
   const [quiz, setQuiz] = useState([]);
-  const [quizLang, setQuizLang] = useState([]);
+  const [quizLang, setQuizLang] = useState("fi");
+  const [checked, setChecked] = useState(true);
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
@@ -167,13 +168,25 @@ export default function Dashboard() {
     if (tag === "allWords") {
       setQuiz(langData);
     } else {
-      const filteredLangData = langData
-        .map((word) => word)
-        .filter((word) => word.tag === tag);
-      setQuiz(filteredLangData);
-      console.log(quiz);
+      setQuiz((prevQuiz) => {
+        return langData.filter((word) => word.tag === tag);
+      });
     }
   };
+
+  const handleChange = (event) => {
+    setChecked(event.target.checked);
+    if (checked) {
+      setting("fi", () => console.log(quizLang));
+    } else {
+      setting("foreign_language", () => console.log(quizLang));
+    }
+  };
+
+  function setting(language, callback) {
+    setQuizLang(language);
+    callback();
+  }
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -321,7 +334,7 @@ export default function Dashboard() {
                     koreanTags.map((tag) => (
                       <ListItem key={tag}>
                         <Button
-                          onClick={() => handleLoadQuiz(koreanData, "tag")}
+                          onClick={() => handleLoadQuiz(koreanData, tag)}
                           variant="text"
                         >
                           {tag}
@@ -368,6 +381,8 @@ export default function Dashboard() {
                         sx={{
                           transform: "scale(1.5)",
                         }}
+                        checked={checked}
+                        onChange={handleChange}
                         color="secondary"
                       />
                     }
