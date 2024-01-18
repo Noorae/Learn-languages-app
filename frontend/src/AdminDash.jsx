@@ -209,6 +209,24 @@ export default function AdminDash() {
     }
   };
 
+  const handleEditWords = async (id) => {
+    try {
+      //to do add await editData(`/api/languages/${language}/${id}`);
+      const newData = await fetchData(`/api/languages/${language}`);
+      if (language === "english") {
+        setEngData(newData);
+      } else if (language === "swedish") {
+        setSwedishData(newData);
+      } else if (language === "korean") {
+        setKoreanData(newData);
+      }
+
+      setTableLang(newData);
+    } catch (error) {
+      console.log("Error while deleting words");
+    }
+  };
+
   return (
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: "flex" }}>
@@ -332,6 +350,7 @@ export default function AdminDash() {
                     tableLang={tableLang}
                     onUpdateTableLang={handleAddNewWords}
                     onDeleteTableLang={handleDeleteWords}
+                    onEditTableLang={handleEditWords}
                   />
                 </Paper>
               </Grid>
