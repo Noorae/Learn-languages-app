@@ -12,6 +12,7 @@ export default function LanguageTable({
   tableLang,
   onUpdateTableLang,
   language,
+  onDeleteTableLang,
 }) {
   const [editItemId, setEditItemId] = useState(null);
   const [updatedTableLang, setUpdatedTableLang] = useState(tableLang);
@@ -27,6 +28,8 @@ export default function LanguageTable({
 
   const handleDelete = (id) => {
     console.log(id);
+
+    onDeleteTableLang(id);
     //send id to parent for deletion
   };
 

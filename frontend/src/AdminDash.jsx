@@ -191,6 +191,11 @@ export default function AdminDash() {
     }
   };
 
+  const handleDeleteWords = async (id) => {
+    //to do add deleteData function call
+    console.log(`ID: ${id} is about to enter deletion`);
+  };
+
   return (
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: "flex" }}>
@@ -313,6 +318,7 @@ export default function AdminDash() {
                   <LanguageTable
                     tableLang={tableLang}
                     onUpdateTableLang={handleAddNewWords}
+                    onDeleteTableLang={handleDeleteWords}
                   />
                 </Paper>
               </Grid>
