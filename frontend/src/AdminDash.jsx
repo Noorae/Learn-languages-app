@@ -256,9 +256,14 @@ export default function AdminDash() {
             <Grid container spacing={3}>
               {/* The table */}
               <Grid item xs={12}>
-                <Paper
-                  sx={{ p: 2, display: "flex", flexDirection: "column" }}
-                ></Paper>
+                <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
+                  <Button
+                    sx={{ mt: 2, mb: 2, ml: 30, mr: 30 }}
+                    variant="contained"
+                  >
+                    Submit changes
+                  </Button>
+                </Paper>
               </Grid>
             </Grid>
             <Copyright sx={{ pt: 4 }} />
