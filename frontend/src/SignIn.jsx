@@ -54,10 +54,11 @@ export default function Login() {
       console.log(res);
       if (res.acessToken !== null) {
         // Successful login
-        const { acesstoken } = res;
+        const { acesstoken, role } = res;
 
         // Save token to localStorage
         localStorage.setItem("token", acesstoken);
+        localStorage.setItem("role", role);
 
         console.log("User signed in");
         setErrorMessage("");

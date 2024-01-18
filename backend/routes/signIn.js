@@ -66,8 +66,7 @@ signInRouter.post("/login", async (req, res) => {
       res.send("Unsuccesful login");
     }
 
-    const username = req.body.username;
-    const user = { name: username };
+    const user = { name: existingUser.username, role: existingUser.role };
 
     const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
     res.json({ acessToken: accessToken });
