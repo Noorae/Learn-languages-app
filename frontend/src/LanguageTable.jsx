@@ -1,68 +1,196 @@
 import * as React from "react";
+import { useState } from "react";
 import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
+import Button from "@mui/material/Button";
+import DeleteIcon from "@mui/icons-material/Delete";
+import TextField from "@mui/material/TextField";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
 
-const columns = [
-  { field: "id", headerName: "ID", width: 90 },
-  {
-    field: "firstName",
-    headerName: "First name",
-    width: 150,
-    editable: true,
-  },
-  {
-    field: "lastName",
-    headerName: "Last name",
-    width: 150,
-    editable: true,
-  },
-  {
-    field: "age",
-    headerName: "Age",
-    type: "number",
-    width: 110,
-    editable: true,
-  },
-  {
-    field: "fullName",
-    headerName: "Full name",
-    description: "This column has a value getter and is not sortable.",
-    sortable: false,
-    width: 160,
-    valueGetter: (params) =>
-      `${params.row.firstName || ""} ${params.row.lastName || ""}`,
-  },
-];
+export default function LanguageTable({ tableLang, onUpdateTableLang }) {
+  const [editItemId, setEditItemId] = useState(null);
+  const [updatedTableLang, setUpdatedTableLang] = useState(tableLang);
+  const [newWordPairData, setNewWordPairData] = useState({
+    foreign_language: "",
+    fi: "",
+    tag: "",
+  });
 
-const rows = [
-  { id: 1, lastName: "Snow", firstName: "Jon", age: 14 },
-  { id: 2, lastName: "Lannister", firstName: "Cersei", age: 31 },
-  { id: 3, lastName: "Lannister", firstName: "Jaime", age: 31 },
-  { id: 4, lastName: "Stark", firstName: "Arya", age: 11 },
-  { id: 5, lastName: "Targaryen", firstName: "Daenerys", age: null },
-  { id: 6, lastName: "Melisandre", firstName: null, age: 150 },
-  { id: 7, lastName: "Clifford", firstName: "Ferrara", age: 44 },
-  { id: 8, lastName: "Frances", firstName: "Rossini", age: 36 },
-  { id: 9, lastName: "Roxie", firstName: "Harvey", age: 65 },
-];
+  const handleEdit = (id) => {
+    // replace local data
+  };
 
-export default function DataGridDemo() {
+  const handleDelete = (id) => {
+    console.log(id);
+    //send id to parent for deletion
+  };
+
+  const handleSave = () => {
+    //send local data to parent for database save
+  };
+
+  const handleAddNewWordPair = (event) => {
+    event.preventDefault(); // prevent the form  default submission
+
+    // extract data from the form fields
+    const newWordPair = {
+      foreign_language: event.target.foreign_language.value,
+      fi: event.target.fi.value,
+      tag: event.target.tag.value,
+    };
+
+    console.log(newWordPair);
+
+    // add the new wordPair to local state
+    setUpdatedTableLang((prevTableLang) => [...prevTableLang, newWordPair]);
+
+    // send updatedTableLangto parent for database add
+    // C´clear form fields
+    setNewWordPairData({
+      foreign_language: "",
+      fi: "",
+      tag: "",
+    });
+  };
+
+  const columns = [
+    {
+      field: "foreign_language",
+      headerName: "Language",
+      width: 150,
+      editable: true,
+    },
+    {
+      field: "fi",
+      headerName: "Translation",
+      width: 150,
+      editable: true,
+    },
+    {
+      field: "tag",
+      headerName: "tag",
+      width: 150,
+      editable: true,
+    },
+    {
+      field: "actions",
+      headerName: "Actions",
+      width: 200,
+      sortable: false,
+      renderCell: (params) => (
+        <div>
+          <Button
+            color="secondary"
+            onClick={() => handleDelete(params.row.id)}
+            startIcon={<DeleteIcon />}
+          >
+            Delete
+          </Button>
+        </div>
+      ),
+    },
+  ];
+
   return (
     <Box sx={{ height: 400, width: "100%" }}>
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        initialState={{
-          pagination: {
-            paginationModel: {
-              pageSize: 10,
-            },
-          },
-        }}
-        pageSizeOptions={[10]}
-        checkboxSelection
-        disableRowSelectionOnClick
-      />
+      <Grid container spacing={3}>
+        <Grid item xs={12}>
+          <DataGrid
+            rows={tableLang}
+            columns={columns}
+            pageSize={10}
+            pageSizeOptions={[]}
+            disableRowSelectionOnClick
+          />
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          sx={{ mt: 2, display: "flex", flexDirection: "row" }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              marginTop: 2,
+            }}
+          >
+            <form onSubmit={handleAddNewWordPair}>
+              <Grid container spacing={4} alignItems="center">
+                <Grid item>
+                  <TextField
+                    id="foreign_language"
+                    name="foreign_language"
+                    label="word"
+                    variant="standard"
+                    sx={{ width: "150px" }}
+                    value={newWordPairData.foreign_language}
+                    onChange={(e) =>
+                      setNewWordPairData({
+                        ...newWordPairData,
+                        foreign_language: e.target.value,
+                      })
+                    }
+                  />
+                </Grid>
+                <Grid item>
+                  <TextField
+                    id="fi"
+                    name="fi"
+                    label="translation"
+                    variant="standard"
+                    sx={{ width: "150px" }}
+                    value={newWordPairData.fi}
+                    onChange={(e) =>
+                      setNewWordPairData({
+                        ...newWordPairData,
+                        fi: e.target.value,
+                      })
+                    }
+                  />
+                </Grid>
+                <Grid item>
+                  <TextField
+                    id="tag"
+                    name="tag"
+                    label="tag"
+                    variant="standard"
+                    sx={{ width: "150px" }}
+                    value={newWordPairData.tag}
+                    onChange={(e) =>
+                      setNewWordPairData({
+                        ...newWordPairData,
+                        tag: e.target.value,
+                      })
+                    }
+                  />
+                </Grid>
+                <Grid item>
+                  <Button type="submit" variant="contained">
+                    Add new
+                  </Button>
+                </Grid>
+              </Grid>
+            </form>
+          </Box>
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          sx={{
+            mt: 2,
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+          }}
+        >
+          <Button variant="contained" onClick={handleSave}>
+            Submit changes
+          </Button>
+        </Grid>
+      </Grid>
     </Box>
   );
 }
