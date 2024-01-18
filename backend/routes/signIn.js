@@ -67,9 +67,10 @@ signInRouter.post("/login", async (req, res) => {
     }
 
     const user = { name: existingUser.username, role: existingUser.role };
+    console.log(user);
 
     const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
-    res.json({ acessToken: accessToken });
+    res.json({ accessToken: accessToken });
   } catch {
     res.status(500).send();
   }
