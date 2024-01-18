@@ -108,6 +108,7 @@ export default function AdminDash() {
   const [swedishTags, setSwedishTags] = useState([]);
   const [koreanTags, setKoreanTags] = useState([]);
   const [tableLang, setTableLang] = useState([]);
+  const [language, setLanguage] = useState([]);
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
@@ -163,8 +164,9 @@ export default function AdminDash() {
     navigate("/signin");
   };
 
-  const handleLoadTable = (langData) => {
+  const handleLoadTable = (langData, language) => {
     setTableLang(langData);
+    setLanguage(language);
   };
 
   const handleUpdateTableLang = (newTableLang) => {
@@ -232,7 +234,7 @@ export default function AdminDash() {
             <Button
               sx={{ p: 2 }}
               variant="text"
-              onClick={() => handleLoadTable(engData)}
+              onClick={() => handleLoadTable(engData, "english")}
             >
               English
             </Button>
@@ -242,7 +244,7 @@ export default function AdminDash() {
             <Button
               sx={{ p: 2 }}
               variant="text"
-              onClick={() => handleLoadTable(swedishData)}
+              onClick={() => handleLoadTable(swedishData, "swedish")}
             >
               Swedish
             </Button>
@@ -252,7 +254,7 @@ export default function AdminDash() {
             <Button
               sx={{ p: 2 }}
               variant="text"
-              onClick={() => handleLoadTable(koreanData)}
+              onClick={() => handleLoadTable(koreanData, "korean")}
             >
               Korean
             </Button>
@@ -290,10 +292,7 @@ export default function AdminDash() {
                     minHeight: 600,
                   }}
                 >
-                  <LanguageTable
-                    onUpdateTableLang={handleUpdateTableLang}
-                    tableLang={tableLang}
-                  />
+                  <LanguageTable tableLang={tableLang} language={language} />
                 </Paper>
               </Grid>
             </Grid>
