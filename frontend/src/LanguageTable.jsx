@@ -8,7 +8,11 @@ import TextField from "@mui/material/TextField";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 
-export default function LanguageTable({ tableLang, onUpdateTableLang }) {
+export default function LanguageTable({
+  tableLang,
+  onUpdateTableLang,
+  language,
+}) {
   const [editItemId, setEditItemId] = useState(null);
   const [updatedTableLang, setUpdatedTableLang] = useState(tableLang);
   const [newWordPairData, setNewWordPairData] = useState({
@@ -42,10 +46,9 @@ export default function LanguageTable({ tableLang, onUpdateTableLang }) {
 
     console.log(newWordPair);
 
-    // add the new wordPair to local state
-    setUpdatedTableLang((prevTableLang) => [...prevTableLang, newWordPair]);
+    onUpdateTableLang(newWordPair);
 
-    // send updatedTableLangto parent for database add
+    // send unewWordPair parent for database add
     // C´clear form fields
     setNewWordPairData({
       foreign_language: "",

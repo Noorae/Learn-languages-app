@@ -31,7 +31,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import LanguageTable from "./LanguageTable.jsx";
 import { useAuth } from "./AuthContext";
 import { useNavigate } from "react-router-dom";
-import { fetchData } from "./Api.jsx";
+import { fetchData, postData } from "./Api.jsx";
 
 function Copyright(props) {
   return (
@@ -173,6 +173,24 @@ export default function AdminDash() {
     setTableLang(newTableLang);
   };
 
+  const handleAddNewWords = async (data) => {
+    try {
+      const res = await postData(`/api/languages/${language}`, data);
+      const newData = await fetchData(`/api/languages/${language}`);
+      if (language === "english") {
+        setEngData(newData);
+      } else if (language === "swedish") {
+        setSwedishData(newData);
+      } else if (language === "korean") {
+        setKoreanData(newData);
+      }
+
+      setTableLang(newData);
+    } catch (error) {
+      console.log("Error while adding new word pairs");
+    }
+  };
+
   return (
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: "flex" }}>
@@ -292,7 +310,10 @@ export default function AdminDash() {
                     minHeight: 600,
                   }}
                 >
-                  <LanguageTable tableLang={tableLang} language={language} />
+                  <LanguageTable
+                    tableLang={tableLang}
+                    onUpdateTableLang={handleAddNewWords}
+                  />
                 </Paper>
               </Grid>
             </Grid>
