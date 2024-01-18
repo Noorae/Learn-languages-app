@@ -39,9 +39,10 @@ export const postData = async (url, data) => {
 
 export const deleteData = async (url) => {
   try {
-    fetch(`${import.meta.env.VITE_API_URL}${url}`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}${url}`, {
       method: "DELETE",
-    }).then((resp) => resp.json());
+    });
+    return response.json();
   } catch (error) {
     console.log("Error while deleting task", error);
   }

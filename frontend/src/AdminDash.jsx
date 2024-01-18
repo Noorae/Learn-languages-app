@@ -192,7 +192,6 @@ export default function AdminDash() {
   };
 
   const handleDeleteWords = async (id) => {
-    //to do add deleteData function call
     try {
       await deleteData(`/api/languages/${language}/${id}`);
       const newData = await fetchData(`/api/languages/${language}`);
