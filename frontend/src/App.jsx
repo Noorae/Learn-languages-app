@@ -2,6 +2,7 @@ import { useState } from "react";
 import SignIn from "./SignIn.jsx";
 import SignUp from "./SignUp.jsx";
 import Dashboard from "./Dashboard.jsx";
+import AdminDash from "./AdminDash.jsx";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Home from "./Home.jsx";
 import PrivateWrapper from "./PrivateRoute";
