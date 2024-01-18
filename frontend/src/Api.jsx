@@ -36,3 +36,13 @@ export const postData = async (url, data) => {
     throw error;
   }
 };
+
+export const deleteData = async (url) => {
+  try {
+    fetch(url, {
+      method: "DELETE",
+    }).then((resp) => resp.json());
+  } catch (error) {
+    console.log("Error while deleting task", error);
+  }
+};
