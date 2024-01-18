@@ -28,6 +28,7 @@ import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import Switch from "@mui/material/Switch";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import LanguageTable from "./LanguageTable.jsx";
 import { useAuth } from "./AuthContext";
 import { useNavigate } from "react-router-dom";
 import { fetchData } from "./Api.jsx";
@@ -227,7 +228,7 @@ export default function AdminDash() {
             <Button
               sx={{ p: 2 }}
               variant="text"
-              onClick={handleLoadTable(engData)}
+              onClick={() => handleLoadTable(engData)}
             >
               English
             </Button>
@@ -237,7 +238,7 @@ export default function AdminDash() {
             <Button
               sx={{ p: 2 }}
               variant="text"
-              onClick={handleLoadTable(swedishData)}
+              onClick={() => handleLoadTable(swedishData)}
             >
               Swedish
             </Button>
@@ -247,7 +248,7 @@ export default function AdminDash() {
             <Button
               sx={{ p: 2 }}
               variant="text"
-              onClick={handleLoadTable(koreanData)}
+              onClick={() => handleLoadTable(koreanData)}
             >
               Korean
             </Button>
@@ -273,6 +274,7 @@ export default function AdminDash() {
               {/* The table */}
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
+                  <LanguageTable />
                   <Button
                     sx={{ mt: 2, mb: 2, ml: 30, mr: 30 }}
                     variant="contained"
