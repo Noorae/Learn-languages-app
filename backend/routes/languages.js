@@ -48,7 +48,7 @@ languagesRouter.post("/:language", async (req, res) => {
     console.log(req.body);
     const data = req.body;
     if (!data.tag) {
-      data.tag = "NULL";
+      data.tag = null;
     }
     console.log(data.tag);
     await database.save(data, language);
