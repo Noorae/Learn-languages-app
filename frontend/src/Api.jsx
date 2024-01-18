@@ -39,7 +39,7 @@ export const postData = async (url, data) => {
 
 export const deleteData = async (url) => {
   try {
-    fetch(url, {
+    fetch(`${import.meta.env.VITE_API_URL}${url}`, {
       method: "DELETE",
     }).then((resp) => resp.json());
   } catch (error) {
