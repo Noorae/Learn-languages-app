@@ -162,6 +162,7 @@ export default function Dashboard() {
 
   const handleLogOut = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("role");
     navigate("/signin");
   };
 
