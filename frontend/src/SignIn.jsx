@@ -62,7 +62,13 @@ export default function Login() {
 
         console.log("User signed in");
         setErrorMessage("");
-        navigate("/dashboard");
+        if (role === "student") {
+          navigate("/dashboard");
+        }
+
+        if (role === "admin") {
+          navigate("/admin/dashboard");
+        }
       } else if (res.acesstoken === NULL) {
         // Username already in use
         setErrorMessage("Error while logging in, please try again.");
