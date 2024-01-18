@@ -15,6 +15,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { postData } from "./Api";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { jwtDecode } from "jwt-decode";
 
 function Copyright(props) {
   return (
@@ -51,16 +52,13 @@ export default function Login() {
     console.log(data);
     try {
       const res = await postData("/api/users/login", data);
-      console.log(res);
-      if (res.acessToken !== null) {
-        // Successful login
-        const { acesstoken, role } = res;
+      if (res.accessToken) {
+        const decodedToken = jwtDecode(res.accessToken);
+        const { name, role } = decodedToken;
 
-        // Save token to localStorage
-        localStorage.setItem("token", acesstoken);
+        localStorage.setItem("token", res.accessToken);
         localStorage.setItem("role", role);
 
-        console.log("User signed in");
         setErrorMessage("");
         if (role === "student") {
           navigate("/dashboard");
@@ -69,11 +67,9 @@ export default function Login() {
         if (role === "admin") {
           navigate("/admin/dashboard");
         }
-      } else if (res.acesstoken === NULL) {
-        // Username already in use
+      } else if (res !== null && res.accessToken === null) {
         setErrorMessage("Error while logging in, please try again.");
       } else {
-        // Handle other status codes if needed
         console.log("Unexpected response status:", res.status);
         setErrorMessage("An error occurred. Please try again.");
       }
