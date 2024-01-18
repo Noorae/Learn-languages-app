@@ -31,7 +31,6 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import { useAuth } from "./AuthContext";
 import { useNavigate } from "react-router-dom";
 import { fetchData } from "./Api.jsx";
-import Quiz from "./Quiz.jsx";
 
 function Copyright(props) {
   return (
@@ -107,6 +106,7 @@ export default function AdminDash() {
   const [engTags, setEngTags] = useState([]);
   const [swedishTags, setSwedishTags] = useState([]);
   const [koreanTags, setKoreanTags] = useState([]);
+  const [tableLang, setTableLang] = useState([]);
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
@@ -160,6 +160,10 @@ export default function AdminDash() {
     localStorage.removeItem("token");
     localStorage.removeItem("role");
     navigate("/signin");
+  };
+
+  const handleLoadTable = (langData) => {
+    setTableLang(langData);
   };
 
   return (
@@ -220,19 +224,31 @@ export default function AdminDash() {
           <Divider />
 
           <List component="nav">
-            <Button sx={{ p: 2 }} variant="text">
+            <Button
+              sx={{ p: 2 }}
+              variant="text"
+              onClick={handleLoadTable(engData)}
+            >
               English
             </Button>
 
             <Divider sx={{ my: 1 }} />
 
-            <Button sx={{ p: 2 }} variant="text">
+            <Button
+              sx={{ p: 2 }}
+              variant="text"
+              onClick={handleLoadTable(swedishData)}
+            >
               Swedish
             </Button>
 
             <Divider sx={{ my: 1 }} />
 
-            <Button sx={{ p: 2 }} variant="text">
+            <Button
+              sx={{ p: 2 }}
+              variant="text"
+              onClick={handleLoadTable(koreanData)}
+            >
               Korean
             </Button>
 
