@@ -15,7 +15,9 @@ function App() {
         <Route element={<PrivateWrapper />}>
           <Route path="/dashboard" element={<Dashboard />} />
         </Route>
-        <Route path="/admin" element={<Home />} />
+        <Route element={<PrivateWrapper />}>
+          <Route path="/admin/dashboard" element={<AdminDash />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );
