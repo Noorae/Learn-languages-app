@@ -100,17 +100,13 @@ const Drawer = styled(MuiDrawer, {
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
-export default function Dashboard() {
+export default function AdminDash() {
   const [engData, setEngData] = useState([]);
   const [swedishData, setSwedishData] = useState([]);
   const [koreanData, setKoreanData] = useState([]);
   const [engTags, setEngTags] = useState([]);
   const [swedishTags, setSwedishTags] = useState([]);
   const [koreanTags, setKoreanTags] = useState([]);
-  const [quiz, setQuiz] = useState([]);
-  const [quizLang, setQuizLang] = useState("fi");
-  const [checked, setChecked] = useState(true);
-  const [score, setScore] = useState([]);
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
@@ -164,34 +160,6 @@ export default function Dashboard() {
     localStorage.removeItem("token");
     localStorage.removeItem("role");
     navigate("/signin");
-  };
-
-  const handleLoadQuiz = (langData, tag) => {
-    if (tag === "allWords") {
-      setQuiz(langData);
-    } else {
-      setQuiz((prevQuiz) => {
-        return langData.filter((word) => word.tag === tag);
-      });
-    }
-  };
-
-  const handleChange = (event) => {
-    const isChecked = event.target.checked;
-    setChecked(isChecked);
-
-    const newLang = isChecked ? "fi" : "foreign_language";
-    setting(newLang, () => console.log(quizLang));
-  };
-
-  function setting(language, callback) {
-    setQuizLang(language);
-    callback();
-  }
-
-  const handleScoreUpdate = (score) => {
-    console.log(`You got ${score} points hurray`);
-    setScore(score);
   };
 
   return (
@@ -252,104 +220,22 @@ export default function Dashboard() {
           <Divider />
 
           <List component="nav">
-            <Accordion elevation={0}>
-              <AccordionSummary
-                expandIcon={<ArrowDownwardIcon />}
-                aria-controls="panel1-content"
-                id="panel1-header"
-              >
-                <Typography>English</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <List>
-                  <ListItem>
-                    <Button
-                      onClick={() => handleLoadQuiz(engData, "allWords")}
-                      variant="text"
-                    >
-                      All words
-                    </Button>
-                  </ListItem>
-                  {engTags &&
-                    engTags.map((tag) => (
-                      <ListItem key={tag}>
-                        <Button
-                          onClick={() => handleLoadQuiz(engData, tag)}
-                          variant="text"
-                        >
-                          {tag}
-                        </Button>
-                      </ListItem>
-                    ))}
-                </List>
-              </AccordionDetails>
-            </Accordion>
+            <Button sx={{ p: 2 }} variant="text">
+              English
+            </Button>
+
             <Divider sx={{ my: 1 }} />
-            <Accordion elevation={0}>
-              <AccordionSummary
-                expandIcon={<ArrowDownwardIcon />}
-                aria-controls="panel1-content"
-                id="panel1-header"
-              >
-                <Typography>Swedish</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <List>
-                  <ListItem>
-                    <Button
-                      onClick={() => handleLoadQuiz(swedishData, "allWords")}
-                      variant="text"
-                    >
-                      All words
-                    </Button>
-                  </ListItem>
-                  {swedishTags &&
-                    swedishTags.map((tag) => (
-                      <ListItem key={tag}>
-                        <Button
-                          onClick={() => handleLoadQuiz(swedishData, tag)}
-                          variant="text"
-                        >
-                          {tag}
-                        </Button>
-                      </ListItem>
-                    ))}
-                </List>
-              </AccordionDetails>
-            </Accordion>
+
+            <Button sx={{ p: 2 }} variant="text">
+              Swedish
+            </Button>
+
             <Divider sx={{ my: 1 }} />
-            <Accordion elevation={0}>
-              <AccordionSummary
-                expandIcon={<ArrowDownwardIcon />}
-                aria-controls="panel1-content"
-                id="panel1-header"
-              >
-                <Typography>Korean</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <List>
-                  <ListItem>
-                    <Button
-                      onClick={() => handleLoadQuiz(koreanData, "allWords")}
-                      variant="text"
-                    >
-                      All words
-                    </Button>
-                  </ListItem>
-                  {koreanTags &&
-                    koreanTags.map((tag) => (
-                      <ListItem key={tag}>
-                        <Button
-                          onClick={() => handleLoadQuiz(koreanData, tag)}
-                          variant="text"
-                        >
-                          {tag}
-                        </Button>
-                      </ListItem>
-                    ))}
-                </List>
-              </AccordionDetails>
-            </Accordion>
+
+            <Button sx={{ p: 2 }} variant="text">
+              Korean
+            </Button>
+
             <Divider sx={{ my: 1 }} />
           </List>
         </Drawer>
@@ -368,67 +254,11 @@ export default function Dashboard() {
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
-              {/* Switch language toggle */}
-              <Grid item xs={12} md={6} lg={9}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: "flex",
-                    flexDirection: "column",
-                    height: 240,
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <FormControlLabel
-                    value="bottom"
-                    control={
-                      <Switch
-                        sx={{
-                          transform: "scale(1.5)",
-                        }}
-                        checked={checked}
-                        onChange={handleChange}
-                        color="secondary"
-                      />
-                    }
-                    label="Switch the language"
-                    labelPlacement="top"
-                  />
-                  <Typography sx={{ textAlign: "center" }}>
-                    FI to Eng
-                  </Typography>
-                </Paper>
-              </Grid>
-              {/* Scores */}
-              <Grid item xs={12} md={6} lg={3}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: "flex",
-                    flexDirection: "column",
-                    height: 240,
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  {score !== null ? (
-                    <Typography sx={{ textAlign: "center" }}>
-                      You scored: {score} points
-                    </Typography>
-                  ) : null}
-                </Paper>
-              </Grid>
-              {/* The quiz */}
+              {/* The table */}
               <Grid item xs={12}>
-                <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
-                  {" "}
-                  <Quiz
-                    quiz={quiz}
-                    toggleQuizLang={quizLang}
-                    onScoreUpdate={handleScoreUpdate}
-                  />
-                </Paper>
+                <Paper
+                  sx={{ p: 2, display: "flex", flexDirection: "column" }}
+                ></Paper>
               </Grid>
             </Grid>
             <Copyright sx={{ pt: 4 }} />
