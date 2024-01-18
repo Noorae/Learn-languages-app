@@ -167,6 +167,10 @@ export default function AdminDash() {
     setTableLang(langData);
   };
 
+  const handleUpdateTableLang = (newTableLang) => {
+    setTableLang(newTableLang);
+  };
+
   return (
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: "flex" }}>
@@ -270,17 +274,26 @@ export default function AdminDash() {
         >
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            <Grid container spacing={3}>
+            <Grid
+              container
+              sx={{ display: "flex", flexDirection: "column" }}
+              spacing={3}
+            >
               {/* The table */}
               <Grid item xs={12}>
-                <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
-                  <LanguageTable />
-                  <Button
-                    sx={{ mt: 2, mb: 2, ml: 30, mr: 30 }}
-                    variant="contained"
-                  >
-                    Submit changes
-                  </Button>
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: "flex",
+                    flexDirection: "column",
+                    flexGrow: 1,
+                    minHeight: 600,
+                  }}
+                >
+                  <LanguageTable
+                    onUpdateTableLang={handleUpdateTableLang}
+                    tableLang={tableLang}
+                  />
                 </Paper>
               </Grid>
             </Grid>
