@@ -17,8 +17,16 @@ The Learn-Languages-App is a project focused on creating a language learning app
 The application has word pairs in different languages, english, swedish and korean, and the user can
 use the app to guess those words.
 
+### Student view
+Student view lets users take quizzes and get scores based on how they performed
+<img align='right' alt='Dashboard' src='./images/dashboard.png'></img>
+
+	
+### Teacher view 
 Teachers have their own admin view, where they can access the words
 and add, delete or modify the word pairs.
+
+<img align='right' alt='AdminDash' src='./images/Admindash.png'></img>
 
 The focus is to have a simple UI and an easy to approach way to learn.
 
