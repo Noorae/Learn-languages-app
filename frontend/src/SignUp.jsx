@@ -16,6 +16,12 @@ import { postData } from "./Api.jsx";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+/**
+ *  Displays Copyright data
+ * @function
+ * @param {Props} props
+ * @returns {JSX.Element}- Copyright Component
+ */
 function Copyright(props) {
   return (
     <Typography
@@ -34,14 +40,28 @@ function Copyright(props) {
   );
 }
 
-// TODO remove, this demo shouldn't need to reset the theme.
-
 const defaultTheme = createTheme();
 
+/**
+ * Signup component page for user registration.
+ *
+ * @component
+ * @returns {JSX.Element} - The SignUp component.
+ */
 export default function SignUp() {
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
+  /**
+   * Handles form submission for user registration.
+   *
+   * @function
+   * @async
+   * @param {Object} event - The form submission event.
+   * @property {Object} data - Data containing username and password signup information.
+   * @property {promise<Object>} res - Promise response containing the signup authorization data.
+   * @throws {Error} Throws error if issues occur during the user registration process.
+   */
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = {
@@ -63,7 +83,7 @@ export default function SignUp() {
           "Username already in use. Please choose a different username."
         );
       } else {
-        // Handle other status codes if needed
+        // Handle other status codes
         console.log("Unexpected response status:", res.status);
         setErrorMessage("An error occurred. Please try again.");
       }
