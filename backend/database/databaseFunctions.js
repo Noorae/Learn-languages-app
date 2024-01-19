@@ -145,4 +145,26 @@ module.exports = {
       });
     });
   },
+
+  updateData: (id, data, language) => {
+    return new Promise((resolve, reject) => {
+      const table = `${language}_words`;
+      const sql = `UPDATE ?? SET foreign_language = ?, fi = ?, tag = ? WHERE id =?`;
+      const values = [
+        table,
+        data.foreign_language,
+        data.fi,
+        data.tag || "",
+        id,
+      ];
+
+      pool.query(sql, values, (err, result) => {
+        if (err) {
+          reject(new Error("Error while saving"));
+        } else {
+          resolve(result);
+        }
+      });
+    });
+  },
 };
