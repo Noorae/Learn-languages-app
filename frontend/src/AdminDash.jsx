@@ -31,7 +31,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import LanguageTable from "./LanguageTable.jsx";
 import { useAuth } from "./AuthContext";
 import { useNavigate } from "react-router-dom";
-import { fetchData, postData, deleteData } from "./Api.jsx";
+import { fetchData, postData, deleteData, editData } from "./Api.jsx";
 
 function Copyright(props) {
   return (
@@ -209,9 +209,10 @@ export default function AdminDash() {
     }
   };
 
-  const handleEditWords = async (id) => {
+  const handleEditWords = async (id, data) => {
     try {
-      //to do add await editData(`/api/languages/${language}/${id}`);
+      console.log(data);
+      await editData(`/api/languages/${language}/${id}`, data);
       const newData = await fetchData(`/api/languages/${language}`);
       if (language === "english") {
         setEngData(newData);
@@ -223,7 +224,7 @@ export default function AdminDash() {
 
       setTableLang(newData);
     } catch (error) {
-      console.log("Error while deleting words");
+      console.log("Error while editin words");
     }
   };
 
