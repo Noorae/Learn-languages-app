@@ -10,6 +10,18 @@ import TextField from "@mui/material/TextField";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 
+/**
+ * LanguageTable component displays a data grid for language word pairs and
+ * functionality for editing, deleting, and adding new word pairs.
+ * @component
+ * @param {Object} props - The properties of the LanguageTable component.
+ * @param {Array} props.tableLang - The array of language data to be displayed.
+ * @param {Function} props.onUpdateTableLang - The function to update the language data.
+ * @param {string} props.language - The current language type.
+ * @param {Function} props.onDeleteTableLang - The function to delete a language entry.
+ * @param {Function} props.onEditTableLang - The function to edit a language entry.
+ * @returns {React.ReactNode} The LanguageTable component.
+ */
 export default function LanguageTable({
   tableLang,
   onUpdateTableLang,
@@ -17,19 +29,32 @@ export default function LanguageTable({
   onDeleteTableLang,
   onEditTableLang,
 }) {
-  const [editItemId, setEditItemId] = useState(null);
-  const [updatedTableLang, setUpdatedTableLang] = useState(tableLang);
+  /**
+   * State to store data for a new word pair.
+   * @type {React.State}
+   */
   const [newWordPairData, setNewWordPairData] = useState({
     foreign_language: "",
     fi: "",
     tag: "",
   });
 
+  /**
+   * Handles the edit action for a language entry.
+   * @param {number} id - The id of the language entry.
+   * @param {Object} editedValues - The edited values of the language entry.
+   * @returns {void}
+   */
   const handleEdit = (id, editedValues) => {
     console.log(editedValues);
     onEditTableLang(id, editedValues);
   };
 
+  /**
+   * Handles the delete action for a language entry.
+   * @param {number} id - The id of the language entry.
+   * @returns {void}
+   */
   const handleDelete = (id) => {
     console.log(id);
 
@@ -37,12 +62,13 @@ export default function LanguageTable({
     //send id to parent for deletion
   };
 
-  const handleSave = () => {
-    //send local data to parent for database save
-  };
-
+  /**
+   * Handles the addition of a new word pair.
+   * @param {Event} event - The form submission event.
+   * @returns {void}
+   */
   const handleAddNewWordPair = (event) => {
-    event.preventDefault(); // prevent the form  default submission
+    event.preventDefault();
 
     // extract data from the form fields
     const newWordPair = {
@@ -64,6 +90,10 @@ export default function LanguageTable({
     });
   };
 
+  /**
+   * Columns configuration for the DataGrid.
+   * @type {Array}
+   */
   const columns = [
     {
       field: "foreign_language",
