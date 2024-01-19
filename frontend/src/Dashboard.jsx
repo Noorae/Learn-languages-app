@@ -100,6 +100,12 @@ const Drawer = styled(MuiDrawer, {
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
+/**
+ * Dashboard component for the Application.
+ *
+ * @component
+ * @returns {JSX.Element} The JSX Dashboard component.
+ */
 export default function Dashboard() {
   const [engData, setEngData] = useState([]);
   const [swedishData, setSwedishData] = useState([]);
@@ -117,6 +123,16 @@ export default function Dashboard() {
     setOpen(!open);
   };
 
+  /**
+   * Fetches language data for English, Swedish, and Korean from the server.
+   *
+   * @async
+   * @function
+   * @property {array} eng - Stores the english language data in an array
+   * @property {array} swedish - Stores the swedish language data in an array
+   * @property {array} korean - Stores the korean language data in an array
+   * @returns {Promise<void>} A Promise that resolves once the data is fetched and state is updated.
+   */
   const fetchLanguageData = async () => {
     try {
       const [eng, swedish, korean] = await Promise.all([
@@ -160,12 +176,25 @@ export default function Dashboard() {
     fetchLanguageData();
   }, []);
 
+  /**
+   * Handles log out process for users.
+   *
+   * @function
+   */
   const handleLogOut = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("role");
     navigate("/signin");
   };
 
+  /**
+   * Loads the quiz based on selected language data and tag.
+   *
+   * @function
+   * @param {Array} langData - Array of language data.
+   * @param {string} tag - Tag of the language data or "allWords".
+   * @returns {void}
+   */
   const handleLoadQuiz = (langData, tag) => {
     if (tag === "allWords") {
       setQuiz(langData);
@@ -176,6 +205,15 @@ export default function Dashboard() {
     }
   };
 
+  /**
+   * Handles the switch toggle to switch between words and translations.
+   *
+   * @function
+   * @param {Object} event - The switch toggle event.
+   * @property {boolean} isChecked - True if switch toggle is set to true.
+   * @property {string} newLang - Sets the correct language based on toggle switch.
+   * @returns {void}
+   */
   const handleChange = (event) => {
     const isChecked = event.target.checked;
     setChecked(isChecked);
@@ -184,13 +222,27 @@ export default function Dashboard() {
     setting(newLang, () => console.log(quizLang));
   };
 
+  /**
+   * Sets the language for the quiz and does a callback.
+   *
+   * @function
+   * @param {string} language - The language to set for the quiz.
+   * @param {Function} callback - The helper callback function to execute after setting the language.
+   * @returns {void}
+   */
   function setting(language, callback) {
     setQuizLang(language);
     callback();
   }
 
+  /**
+   * Handles the user score in the quiz.
+   *
+   * @function
+   * @param {number} score - The user score in the quiz.
+   * @returns {void}
+   */
   const handleScoreUpdate = (score) => {
-    console.log(`You got ${score} points hurray`);
     setScore(score);
   };
 
