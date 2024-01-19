@@ -75,4 +75,8 @@ various technologies and frameworks to demonstrate the skills acquired during th
 
 Developed by Noora Vainionpää noora_vain@hotmail.com [Email](noora_vain@hotmail.com)
 
+[Screencast video](https://youtu.be/1qdcbU4l7dk?si=Xv1aH3SB_JRM8KWz)
+
 [Project repository](https://github.com/Noorae/Learn-languages-app)
+
+[Live version in Render.com](https://learn-languages-app-80hz.onrender.com/)
