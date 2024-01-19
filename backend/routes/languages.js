@@ -58,4 +58,19 @@ languagesRouter.post("/:language", async (req, res) => {
   }
 });
 
+languagesRouter.put("/:language/:myId([0-9]+)", async (req, res) => {
+  try {
+    const id = parseInt(req.params.myId);
+    const language = req.params.language;
+    const data = req.body;
+    if (!data.tag) {
+      data.tag = null;
+    }
+    const response = await database.updateData(id, data, language);
+    res.status(201).json(req.body);
+  } catch (err) {
+    res.sendStatus(400);
+  }
+});
+
 module.exports = languagesRouter;
