@@ -78,6 +78,8 @@ const Drawer = styled(MuiDrawer, {
     position: "relative",
     whiteSpace: "nowrap",
     width: drawerWidth,
+    height: "100vh", // Set the height to 100% of the viewport height
+    overflowY: "auto",
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
@@ -91,7 +93,7 @@ const Drawer = styled(MuiDrawer, {
       }),
       width: theme.spacing(7),
       [theme.breakpoints.up("sm")]: {
-        width: theme.spacing(9),
+        width: theme.spacing(0),
       },
     }),
   },
@@ -306,9 +308,11 @@ export default function Dashboard() {
         <CssBaseline />
         <AppBar position="absolute" open={open}>
           <Toolbar
-            sx={{
-              pr: "24px", // keep right padding when drawer closed
-            }}
+            sx={
+              {
+                // keep right padding when drawer closed
+              }
+            }
           >
             <IconButton
               edge="start"
@@ -316,7 +320,6 @@ export default function Dashboard() {
               aria-label="open drawer"
               onClick={toggleDrawer}
               sx={{
-                marginRight: "36px",
                 ...(open && { display: "none" }),
               }}
             >
@@ -331,11 +334,6 @@ export default function Dashboard() {
             >
               Dashboard
             </Typography>
-            <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
           </Toolbar>
         </AppBar>
         <Drawer variant="permanent" open={open}>
@@ -498,12 +496,13 @@ export default function Dashboard() {
                         color="secondary"
                       />
                     }
-                    label="Switch the language"
-                    labelPlacement="top"
+                    label={
+                      checked
+                        ? "From Finnish to Foreign language"
+                        : "From Foreign language to Finnish language"
+                    }
+                    labelPlacement="bottom"
                   />
-                  <Typography sx={{ textAlign: "center" }}>
-                    FI to Eng
-                  </Typography>
                 </Paper>
               </Grid>
               {/* Scores */}
@@ -519,23 +518,46 @@ export default function Dashboard() {
                   }}
                 >
                   {score !== null ? (
-                    <Typography sx={{ textAlign: "center" }}>
-                      You scored: {score} points
+                    <Typography
+                      sx={{ textAlign: "center" }}
+                      color="secondary"
+                      variant="h4"
+                    >
+                      score:{" "}
+                      <span
+                        style={{
+                          fontSize: "36px",
+                          fontWeight: "bold",
+                          color: "#fcba03",
+                        }}
+                      >
+                        {score}
+                      </span>
                     </Typography>
                   ) : null}
                 </Paper>
               </Grid>
               {/* The quiz */}
-              <Grid item xs={12}>
-                <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
-                  {" "}
-                  <Quiz
-                    quiz={quiz}
-                    toggleQuizLang={quizLang}
-                    onScoreUpdate={handleScoreUpdate}
-                  />
-                </Paper>
-              </Grid>
+              {quiz.length > 0 && (
+                <Grid item xs={12}>
+                  <Paper
+                    sx={{
+                      p: 2,
+                      display: "flex",
+                      flexDirection: "column",
+                      overflowX: "auto",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Quiz
+                      quiz={quiz}
+                      toggleQuizLang={quizLang}
+                      onScoreUpdate={handleScoreUpdate}
+                    />
+                  </Paper>
+                </Grid>
+              )}
             </Grid>
             <Copyright sx={{ pt: 4 }} />
           </Container>
