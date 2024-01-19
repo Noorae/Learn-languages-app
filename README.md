@@ -26,6 +26,24 @@
 
 ## Usage
 
+To start developing:
+
+1. Clone the repo
+   ```sh
+   git clone https://github.com/Noorae/Learn-languages-app.git
+   ```
+2. Run the install script in the root of the project
+   ```sh
+   npm run install-all
+   ```
+3. Run development
+   ```js
+   npm run start
+   ```
+
+To start using the website, simply go to [link to website](#_blank)
+Create an account and log in.
+
 ## License
 
 ## Contact
