@@ -4,6 +4,8 @@ import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import AddIcon from "@mui/icons-material/Add";
 import TextField from "@mui/material/TextField";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
@@ -13,6 +15,7 @@ export default function LanguageTable({
   onUpdateTableLang,
   language,
   onDeleteTableLang,
+  onEditeTableLang,
 }) {
   const [editItemId, setEditItemId] = useState(null);
   const [updatedTableLang, setUpdatedTableLang] = useState(tableLang);
@@ -22,8 +25,9 @@ export default function LanguageTable({
     tag: "",
   });
 
-  const handleEdit = (id) => {
-    // replace local data
+  const handleEdit = (id, editedValues) => {
+    console.log(editedValues);
+    onEditeTableLang(id, editedData);
   };
 
   const handleDelete = (id) => {
@@ -82,10 +86,17 @@ export default function LanguageTable({
     {
       field: "actions",
       headerName: "Actions",
-      width: 200,
+      flex: 1,
       sortable: false,
       renderCell: (params) => (
         <div>
+          <Button
+            color="primary"
+            onClick={() => handleEdit(params.row.id, params.row)}
+            startIcon={<EditIcon />}
+          >
+            Submit Edit
+          </Button>
           <Button
             color="secondary"
             onClick={() => handleDelete(params.row.id)}
@@ -100,7 +111,16 @@ export default function LanguageTable({
 
   return (
     <Box sx={{ height: 400, width: "100%" }}>
-      <Grid container spacing={3}>
+      <Grid
+        container
+        sx={{
+          mt: 2,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+        }}
+        spacing={3}
+      >
         <Grid item xs={12}>
           <DataGrid
             rows={tableLang}
@@ -174,7 +194,11 @@ export default function LanguageTable({
                   />
                 </Grid>
                 <Grid item>
-                  <Button type="submit" variant="contained">
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    startIcon={<AddIcon />}
+                  >
                     Add new
                   </Button>
                 </Grid>
@@ -191,11 +215,7 @@ export default function LanguageTable({
             flexDirection: "row",
             justifyContent: "center",
           }}
-        >
-          <Button variant="contained" onClick={handleSave}>
-            Submit changes
-          </Button>
-        </Grid>
+        ></Grid>
       </Grid>
     </Box>
   );
