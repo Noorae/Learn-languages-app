@@ -89,7 +89,6 @@ module.exports = {
           if (result.affectedRows === 0) {
             reject(new Error("Could not delete resource with id = " + id));
           } else {
-            console.log("Deletion succesful");
             resolve(result);
           }
         }
@@ -207,13 +206,9 @@ module.exports = {
           reject(new Error("Error while quering data"));
         } else {
           if (result.length > 0) {
-            console.log("Result came back with a matching name");
             const [match] = result;
-            console.log(match);
             resolve(match);
           } else {
-            console.log("No matches in the result");
-            console.log(result);
             resolve(null);
           }
         }
