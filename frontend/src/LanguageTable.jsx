@@ -15,7 +15,7 @@ export default function LanguageTable({
   onUpdateTableLang,
   language,
   onDeleteTableLang,
-  onEditeTableLang,
+  onEditTableLang,
 }) {
   const [editItemId, setEditItemId] = useState(null);
   const [updatedTableLang, setUpdatedTableLang] = useState(tableLang);
@@ -27,7 +27,7 @@ export default function LanguageTable({
 
   const handleEdit = (id, editedValues) => {
     console.log(editedValues);
-    onEditeTableLang(id, editedData);
+    onEditTableLang(id, editedValues);
   };
 
   const handleDelete = (id) => {
