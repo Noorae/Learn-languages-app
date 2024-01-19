@@ -17,6 +17,12 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { jwtDecode } from "jwt-decode";
 
+/**
+ *  Displays Copyright data
+ * @function
+ * @param {Props} props
+ * @returns {JSX.Element}- Copyright Component
+ */
 function Copyright(props) {
   return (
     <Typography
@@ -35,14 +41,30 @@ function Copyright(props) {
   );
 }
 
-// TODO remove, this demo shouldn't need to reset the theme.
-
 const defaultTheme = createTheme();
 
+/**
+ * Component representing the Login page for user authentication.
+ *
+ * @component
+ * @returns {JSX.Element} The JSX element of the Login component.
+ */
 export default function Login() {
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
+  /**
+   * Handles form submission for user login.
+   *
+   * @function
+   * @async
+   * @param {Object} event - The form submission event.
+   * @property {Object} data - Data containing username and password login information.
+   * @property {promise<Object>} res - Promise response containing the access authorization data.
+   * @property {Object} decodedToken - Decoded information from token containing the username and user role.
+   * @property {string} role - Role decoded from accessToken.
+   * @throws {Error} Throws error if issues occur during login process.
+   */
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = {
