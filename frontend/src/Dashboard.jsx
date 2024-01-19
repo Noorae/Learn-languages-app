@@ -107,18 +107,72 @@ const defaultTheme = createTheme();
  * @returns {JSX.Element} The JSX Dashboard component.
  */
 export default function Dashboard() {
+  /**
+   * State variable for English language data.
+   * @type {Array}
+   */
   const [engData, setEngData] = useState([]);
+  /**
+   * State variable for Swedish language data.
+   * @type {Array}
+   */
   const [swedishData, setSwedishData] = useState([]);
+  /**
+   * State variable for Korean language data.
+   * @type {Array}
+   */
   const [koreanData, setKoreanData] = useState([]);
+  /**
+   * State variable for English language tags.
+   * @type {Array}
+   */
   const [engTags, setEngTags] = useState([]);
+  /**
+   * State variable for Swedish language tags.
+   * @type {Array}
+   */
   const [swedishTags, setSwedishTags] = useState([]);
+  /**
+   * State variable for Korean language tags.
+   * @type {Array}
+   */
   const [koreanTags, setKoreanTags] = useState([]);
+  /**
+   * State variable for chosen quiz data.
+   * @type {Array}
+   */
   const [quiz, setQuiz] = useState([]);
+  /**
+   * State variable for chosen quiz language data.
+   * @type {string}
+   */
   const [quizLang, setQuizLang] = useState("fi");
+  /**
+   * State variable for toggle quiz lang data.
+   * @type {boolean}
+   */
   const [checked, setChecked] = useState(true);
+  /**
+   * State variable for storing the user quiz score data.
+   * @type {number}
+   */
   const [score, setScore] = useState([]);
+  /**
+   * React Router navigation hook.
+   * @type {function}
+   */
   const navigate = useNavigate();
+  /**
+   * State variable for the drawer's open/close status.
+   * @type {boolean}
+   */
   const [open, setOpen] = React.useState(true);
+  /**
+   * Toggles the drawer open and close.
+   *
+   * @function
+   * @returns {void}
+   */
   const toggleDrawer = () => {
     setOpen(!open);
   };
