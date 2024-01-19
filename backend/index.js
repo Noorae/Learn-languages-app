@@ -20,6 +20,10 @@ app.use(cors());
 app.use("/api/languages/", languagesRouter);
 app.use("/api/users/", signInRouter);
 
+app.all("*", (req, res) => {
+  res.sendFile("index.html", { root: "./frontend/dist" });
+});
+
 /**
  * Express server start.
  * @type {Object}
