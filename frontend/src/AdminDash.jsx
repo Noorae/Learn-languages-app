@@ -33,6 +33,12 @@ import { useAuth } from "./AuthContext";
 import { useNavigate } from "react-router-dom";
 import { fetchData, postData, deleteData, editData } from "./Api.jsx";
 
+/**
+ *  Displays Copyright data
+ * @function
+ * @param {Props} props
+ * @returns {JSX.Element}- Copyright Component
+ */
 function Copyright(props) {
   return (
     <Typography
@@ -97,24 +103,70 @@ const Drawer = styled(MuiDrawer, {
   },
 }));
 
-// TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
+/**
+ * Admin Dashboard component for data manipulation.
+ *
+ * @component
+ * @returns {JSX.Element} The JSX element of the Admin Dashboard component.
+ */
 export default function AdminDash() {
+  /**
+   * State variable for English language data.
+   * @type {Array}
+   */
   const [engData, setEngData] = useState([]);
+  /**
+   * State variable for Swedish language data.
+   * @type {Array}
+   */
   const [swedishData, setSwedishData] = useState([]);
+  /**
+   * State variable for Korean language data.
+   * @type {Array}
+   */
   const [koreanData, setKoreanData] = useState([]);
-  const [engTags, setEngTags] = useState([]);
-  const [swedishTags, setSwedishTags] = useState([]);
-  const [koreanTags, setKoreanTags] = useState([]);
+  /**
+   * State variable for chosen table language.
+   * @type {Array}
+   */
   const [tableLang, setTableLang] = useState([]);
+  /**
+   * State variable for selected language.
+   * @type {Array}
+   */
   const [language, setLanguage] = useState([]);
+  /**
+   * React Router navigation hook.
+   * @type {function}
+   */
   const navigate = useNavigate();
+  /**
+   * State variable for the drawer's open/close status.
+   * @type {boolean}
+   */
   const [open, setOpen] = React.useState(true);
+  /**
+   * Toggles the drawer open and close.
+   *
+   * @function
+   * @returns {void}
+   */
   const toggleDrawer = () => {
     setOpen(!open);
   };
 
+  /**
+   * Fetches language data for English, Swedish, and Korean from the server.
+   *
+   * @async
+   * @function
+   * @property {array} eng - Stores the english language data in an array
+   * @property {array} swedish - Stores the swedish language data in an array
+   * @property {array} korean - Stores the korean language data in an array
+   * @returns {Promise<void>} A Promise that resolves once the data is fetched and state is updated.
+   */
   const fetchLanguageData = async () => {
     try {
       const [eng, swedish, korean] = await Promise.all([
@@ -158,21 +210,49 @@ export default function AdminDash() {
     fetchLanguageData();
   }, []);
 
+  /**
+   * Handles log out process for users.
+   *
+   * @function
+   */
   const handleLogOut = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("role");
     navigate("/signin");
   };
 
+  /**
+   * Loads language data into the table based on the selected language.
+   *
+   * @function
+   * @param {Array} langData - Array of language data.
+   * @param {string} language - The selected language.
+   * @returns {void}
+   */
   const handleLoadTable = (langData, language) => {
     setTableLang(langData);
     setLanguage(language);
   };
 
+  /**
+   * Updates the table language state variable.
+   *
+   * @function
+   * @param {Array} newTableLang - Updated table language data.
+   * @returns {void}
+   */
   const handleUpdateTableLang = (newTableLang) => {
     setTableLang(newTableLang);
   };
 
+  /**
+   * Handles the addition of new words to the language table.
+   *
+   * @async
+   * @function
+   * @param {Object} data - New word data.
+   * @returns {Promise<void>} A Promise that resolves once the new words are added and state is updated.
+   */
   const handleAddNewWords = async (data) => {
     try {
       const res = await postData(`/api/languages/${language}`, data);
@@ -191,6 +271,14 @@ export default function AdminDash() {
     }
   };
 
+  /**
+   * Handles the deletion of words from the language table.
+   *
+   * @async
+   * @function
+   * @param {string} id - The ID of the word to be deleted.
+   * @returns {Promise<void>} A Promise that resolves once the word is deleted and state is updated.
+   */
   const handleDeleteWords = async (id) => {
     try {
       await deleteData(`/api/languages/${language}/${id}`);
@@ -209,6 +297,15 @@ export default function AdminDash() {
     }
   };
 
+  /**
+   * Handles the editing of words in the language table.
+   *
+   * @async
+   * @function
+   * @param {string} id - The ID of the word to be edited.
+   * @param {Object} data - Updated word data.
+   * @returns {Promise<void>} A Promise that resolves once the word is edited and state is updated.
+   */
   const handleEditWords = async (id, data) => {
     try {
       console.log(data);
