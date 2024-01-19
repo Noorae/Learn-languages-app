@@ -7,15 +7,24 @@ const app = express();
 const pool = require("./database/databaseConnection.js");
 const cors = require("cors");
 
+//Middleware to parse requests to JSON
 app.use(express.json());
 
+// Servers build files from the spesified directory
 app.use(express.static("./frontend/dist"));
 
+//Enable the use of CORS
 app.use(cors());
 
+// Language and user routes
 app.use("/api/languages/", languagesRouter);
 app.use("/api/users/", signInRouter);
 
+/**
+ * Express server start.
+ * @type {Object}
+ * @throws {Error} - Throws error if errors occur server start process.
+ */
 const server = app
   .listen(port, () => {
     console.log(`Server listening on port ${port}`);
@@ -25,9 +34,13 @@ const server = app
     process.exit(1);
   });
 
+/**
+ * Graceful shut down of the server and mysql client.
+ * @function
+ * @throws {Error} - Throws error if errors occur during shutdown process.
+ */
 const gracefulShutdown = () => {
   console.log("Starting graceful shutdown...");
-  // Close the server
   if (server) {
     console.log("Server was opened, so we can close it...");
     server.close((err) => {
@@ -52,5 +65,6 @@ const gracefulShutdown = () => {
   }
 };
 
+//Handle termination
 process.on("SIGTERM", gracefulShutdown); // Some other app requirest shutdown.
 process.on("SIGINT", gracefulShutdown); // ctrl-c
