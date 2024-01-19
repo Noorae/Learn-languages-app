@@ -19,6 +19,9 @@ function App() {
         <Route element={<PrivateWrapper />}>
           <Route path="/admin/dashboard" element={<AdminDash />} />
         </Route>
+        <Route element={<PrivateWrapper />}>
+          <Route path="/" element={<Dashboard />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );
