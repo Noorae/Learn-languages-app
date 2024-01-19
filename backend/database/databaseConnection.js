@@ -1,7 +1,17 @@
 const mysql = require("mysql");
 require("dotenv").config({ path: "../.env" });
 
-// create connection with .env file credentials
+/**
+ * Create connection with .env file credentials
+ *
+ * @function
+ * @property {number} connectionLimit - The pool connection limit in numbers.
+ * @property {string} host - The host of the database.
+ * @property {string} user - The username for connecting to the database.
+ * @property {string} password - Password for connecting to the database.
+ * @property {string} database - The name of the database.
+ *
+ */
 const pool = mysql.createPool({
   connectionLimit: 10,
   host: process.env.DB_HOST,
