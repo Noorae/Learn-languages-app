@@ -37,6 +37,31 @@ export const postData = async (url, data) => {
   }
 };
 
+export const editData = async (url, data) => {
+  try {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}${url}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    console.log(response);
+    if (response.status === 201 || response.status === 200) {
+      // Handle successful response (status 201)
+      const responseData = await response.json();
+      console.log(responseData);
+      return responseData;
+    } else if (!response.ok) {
+      // Handle other error cases
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+  } catch (error) {
+    console.log("Error while posting data:", error);
+    throw error;
+  }
+};
+
 export const deleteData = async (url) => {
   try {
     const response = await fetch(`${import.meta.env.VITE_API_URL}${url}`, {
