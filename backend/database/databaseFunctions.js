@@ -2,6 +2,12 @@ const mysql = require("mysql");
 const pool = require("./databaseConnection.js");
 
 module.exports = {
+  /**
+   * Make a connection to the database.
+   * @function
+   * @returns {Promise<void>} A Promise which resolves when the connection is successful.
+   * @throws {Error} Throws error if there is an issue connecting to the database.
+   */
   connect: () => {
     return new Promise((resolve, reject) => {
       console.log("Starting connection...");
@@ -17,6 +23,12 @@ module.exports = {
     });
   },
 
+  /**
+   * End connection to database.
+   * @function
+   * @returns {Promise<void>} A Promise which resolves when the connection is closed.
+   * @throws {Error} Throws error if there is an issue shutting down the connection to database.
+   */
   close: () => {
     return new Promise((resolve, reject) => {
       pool.end((err) => {
@@ -29,25 +41,41 @@ module.exports = {
     });
   },
 
-  //find all entries in a correct language table
+  /**
+   * Finds all entries in a correct language table.
+   * @function
+   * @param {string} language - The language to search entries for.
+   * @property {string} table - The name of database table to get data from.
+   * @property {string} sql - The parameterized SQL query.
+   * @property {array} values - parameters to be used to complete the SQL query.
+   * @returns {Promise<Array<Object>>} A Promise that resolves with entries in an array.
+   * @throws {Error} Throws an error if there is an issue while getting data from database.
+   */
   findAll: (language) => {
     return new Promise((resolve, reject) => {
-      //table name is based on the language
       const table = `${language}_words`;
       const sql = `SELECT * from ??`;
-      //protect for sql injection
       const values = [table];
       pool.query(sql, values, (err, result) => {
         if (err) {
           reject(new Error("Unexpected error occured"));
         }
-        //console.log("Connection ID: " + result[0]["ConnID"]);
         resolve(result);
       });
     });
   },
 
-  //delete by id
+  /**
+   * Delete language data by the correct id.
+   * @function
+   * @param {string} language - The language to search entries for.
+   * @param {number} id - The id of data entry to be deleted.
+   * @property {string} table - The name of database table to delete data from.
+   * @property {string} sql - The parameterized SQL query.
+   * @property {array} values - parameters to be used to complete the SQL query.
+   * @returns {Promise<Array<Object>>} A Promise that resolves with array containinf deletion data.
+   * @throws {Error} Throws an error if there is an issue while deleting data from database.
+   */
   deleteById: (id, language) => {
     return new Promise((resolve, reject) => {
       const table = `${language}_words`;
@@ -69,7 +97,17 @@ module.exports = {
     });
   },
 
-  //filterbytag
+  /**
+   * Filters data from database based on a tag.
+   * @function
+   * @param {string} language - The language to search entries for.
+   * @param {string} tag - The tag to filter data with from database.
+   * @property {string} table - The name of database table to get data from.
+   * @property {string} sql - The parameterized SQL query.
+   * @property {array} values - parameters to be used to complete the SQL query.
+   * @returns {Promise<Array<Object>>} A Promise that resolves with array containing resulted data in an array.
+   * @throws {Error} Throws an error if there is an issue while filtering data from database.
+   */
   filterByValues: (tag, language) => {
     return new Promise((resolve, reject) => {
       const table = `${language}_words`;
@@ -89,6 +127,20 @@ module.exports = {
     });
   },
 
+  /**
+   * Save new language data to database.
+   * @function
+   * @param {string} language - The language to save new data for.
+   * @param {Object} data - The data to be saved in database.
+   * @param {string} data.foreign_language - Word in the spesified language
+   * @param {string} data.fi - Word translation in finnish
+   * @param {string} data.tag - Tag of the language data.
+   * @property {string} table - The name of database table to get data from.
+   * @property {string} sql - The parameterized SQL query.
+   * @property {array} values - parameters to be used to complete the SQL query.
+   * @returns {Promise<Array<Object>>} A Promise that resolves with array containing resulted data in an array.
+   * @throws {Error} Throws an error if there is an issue while saving data to database.
+   */
   save: (data, language) => {
     return new Promise((resolve, reject) => {
       const table = `${language}_words`;
@@ -105,6 +157,19 @@ module.exports = {
     });
   },
 
+  /**
+   * Save new user data to database.
+   * @function
+   * @param {Object} data - The user data to be saved in database.
+   * @param {string} data.username - Name of the user to be added to database.
+   * @param {string} data.password - Hashed password of the user to be added to database.
+   * @param {string} data.role - Role fo the user to be added to database.
+   * @property {string} table - The name of database table to save data to.
+   * @property {string} sql - The parameterized SQL query.
+   * @property {array} values - parameters to be used to complete the SQL query.
+   * @returns {Promise<Array<Object>>} A Promise that resolves with array containing resulted data in an array.
+   * @throws {Error} Throws an error if there is an issue while saving data to database.
+   */
   saveUserData: (data) => {
     return new Promise((resolve, reject) => {
       const table = `learning_app_users`;
@@ -121,6 +186,16 @@ module.exports = {
     });
   },
 
+  /**
+   * Fidn users from the database by name.
+   * @function
+   * @param {string} username - The name of user to be searched from database.
+   * @property {string} table - The name of database table to search user from.
+   * @property {string} sql - The parameterized SQL query.
+   * @property {array} values - parameters to be used to complete the SQL query.
+   * @returns {Promise<?Object>} A Promise that resolves with user data if match was found and null if match was not found.
+   * @throws {Error} Throws an error if there is an issue while searching data from database.
+   */
   findByUserName: (username) => {
     return new Promise((resolve, reject) => {
       const table = `learning_app_users`;
@@ -145,7 +220,21 @@ module.exports = {
       });
     });
   },
-
+  /**
+   * Update existing language data to database.
+   * @function
+   * @param {number} id - Id of the language data to be updated
+   * @param {Object} data - Data that is to be replaced in the database.
+   * @param {string} data.foreign_language - Word data to be updated.
+   * @param {string} data.fi - Word Translation in finnish to be updated.
+   * @param {string} data.tag - Word data tag to be updated to to database.
+   * @param {string} language - The language in which the data is to be replaced.
+   * @property {string} table - The name of database table to update data to.
+   * @property {string} sql - The parameterized SQL query.
+   * @property {array} values - parameters to be used to complete the SQL query.
+   * @returns {Promise<Object>} A Promise that resolves with result of the update to database.
+   * @throws {Error} Throws an error if there is an issue while updating data to database.
+   */
   updateData: (id, data, language) => {
     return new Promise((resolve, reject) => {
       const table = `${language}_words`;
