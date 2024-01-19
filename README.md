@@ -46,4 +46,6 @@ Create an account and log in.
 
 ## License
 
+This project is under the MIT License. See here: [License.md](/license.md)
+
 ## Contact
