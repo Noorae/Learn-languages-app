@@ -1,13 +1,19 @@
 const database = require("../database/databaseFunctions.js");
 const express = require("express");
 const languagesRouter = express.Router();
-// to do: validation
 
+/**
+ * Route handler to get language data for a specific language.
+ *
+ * @function
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ * @returns {Promise<void>} A Promise that resolves when language data retrieved successfully.
+ * @throws {Object} JSON object with error message if an issue occur.
+ */
 languagesRouter.get("/:language", async (req, res) => {
   try {
-    //extract the language from the url
     const language = req.params.language;
-    console.log(language);
     const translations = await database.findAll(language);
     res.json(translations);
   } catch (err) {
@@ -15,7 +21,15 @@ languagesRouter.get("/:language", async (req, res) => {
   }
 });
 
-//delete value by id
+/**
+ * Route handler to delete word data by ID for a specific language.
+ *
+ * @function
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ * @returns {Promise<void>} A Promise that resolves when the deletion is completed successfully.
+ * @throws {Object} JSON object with an error message if an issue occurs during the deletion process.
+ */
 languagesRouter.delete("/:language/:myId([0-9]+)", async (req, res) => {
   try {
     const id = parseInt(req.params.myId);
@@ -27,7 +41,15 @@ languagesRouter.delete("/:language/:myId([0-9]+)", async (req, res) => {
   }
 });
 
-//filter by longitude, latitude
+/**
+ * Route handler to filter data by tag for a specific language.
+ *
+ * @function
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ * @returns {Promise<void>} A Promise that resolves when data filter is successful.
+ * @throws {Object} JSON object with an error message if an issue occurs during the filtering process.
+ */
 languagesRouter.get("/:language/:tag", async (req, res) => {
   try {
     const language = req.params.language;
@@ -39,18 +61,22 @@ languagesRouter.get("/:language/:tag", async (req, res) => {
   }
 });
 
-//add new word pair
+/**
+ * Route handler to add a new word pair for a specific language.
+ *
+ * @function
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ * @returns {Promise<void>} A Promise that resolves when the new word pair is added successfully.
+ * @throws {Object} JSON object with an error message if an issue occurs during the addition process.
+ */
 languagesRouter.post("/:language", async (req, res) => {
   try {
-    //TO DO add validation here for the req body
     const language = req.params.language;
-    console.log(language);
-    console.log(req.body);
     const data = req.body;
     if (!data.tag) {
       data.tag = null;
     }
-    console.log(data.tag);
     await database.save(data, language);
     res.status(201).json(req.body);
   } catch (err) {
@@ -58,6 +84,15 @@ languagesRouter.post("/:language", async (req, res) => {
   }
 });
 
+/**
+ * Route handler to update data for a specific language with spesific ID.
+ *
+ * @function
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ * @returns {Promise<void>} A Promise that resolves when the data is updated successfully.
+ * @throws {Object} JSON object with an error message if an issue occurs during the update process.
+ */
 languagesRouter.put("/:language/:myId([0-9]+)", async (req, res) => {
   try {
     const id = parseInt(req.params.myId);
