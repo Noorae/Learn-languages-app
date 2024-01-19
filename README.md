@@ -50,7 +50,7 @@ To start developing:
    npm run start
    ```
 
-To start using the website, simply go to [link to website](#_blank)
+To start using the website, simply go to [link to website](https://learn-languages-app-80hz.onrender.com/)
 Create an account and log in.
 
 ## License
