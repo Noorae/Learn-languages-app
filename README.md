@@ -49,3 +49,13 @@ Create an account and log in.
 This project is under the MIT License. See here: [License.md](/license.md)
 
 ## Contact
+
+This project was developed as part of the BBA Information Technology
+backend course at Tampere University of Applied Sciences. It serves as
+a practical exercise focusing on building a full-stack application.
+The coursework emphasized backend development, and the project includes
+various technologies and frameworks to demonstrate the skills acquired during the course.
+
+Developed by Noora Vainionpää noora_vain@hotmail.com [Email](noora_vain@hotmail.com)
+
+[Project repository](https://github.com/Noorae/Learn-languages-app)
