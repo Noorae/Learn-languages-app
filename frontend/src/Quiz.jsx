@@ -48,7 +48,7 @@ const Quiz = ({ quiz, toggleQuizLang, onScoreUpdate }) => {
     console.log("Current toggleQuizLang value:", currentToggleQuizLang);
 
     quiz.forEach((wordPair, index) => {
-      const userAnswer = userAnswers[index].toLowerCase();
+      const userAnswer = (userAnswers[index] ?? "").toLowerCase();
       console.log("toggleQuizLang value during loop:", currentToggleQuizLang);
 
       const correctAnswerField =
@@ -64,65 +64,71 @@ const Quiz = ({ quiz, toggleQuizLang, onScoreUpdate }) => {
     });
 
     onScoreUpdate(score);
+    score = null;
     setUserAnswers([]); // reset user answers after submission
   };
 
   return (
-    <Paper>
-      <Grid
-        container
-        spacing={3}
-        sx={{
-          p: 2, // padding
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        {quiz &&
-          quiz.map((wordPair, index) => (
-            <Grid
-              container
-              sx={{
-                p: 2, // padding
-                display: "flex",
-                flexDirection: "column",
-                height: 50,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-              key={index}
-            >
-              {" "}
-              <Grid item xs={12} md={6} lg={9}>
-                <Typography>{wordPair[toggleQuizLang]}</Typography>
-              </Grid>
-              <Grid item xs={12} md={6} lg={9}>
-                <TextField
-                  id="outlined-basic"
-                  label="Guess word"
-                  variant="outlined"
-                  value={userAnswers[index] || ""}
-                  onChange={(e) => handleAnswerChange(index, e.target.value)}
-                />
-              </Grid>
+    <Grid
+      container
+      spacing={3}
+      sx={{
+        p: 2, // padding
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      {quiz &&
+        quiz.map((wordPair, index) => (
+          <Grid
+            container
+            sx={{
+              p: 1, // padding
+              mt: 5,
+              display: "flex",
+              flexDirection: "column",
+              height: { xs: 120, md: 60 },
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+            key={index}
+          >
+            {" "}
+            <Grid item xs={12} md={6} lg={9}>
+              <Typography sx={{ fontSize: "20px" }}>
+                {wordPair[toggleQuizLang]}
+              </Typography>
             </Grid>
-          ))}
-        <Button
-          onClick={handleSubmit}
-          sx={{
-            marginLeft: 30,
-            marginRight: 30,
-            marginTop: 10,
-            marginBottom: 1,
-          }}
-          variant="contained"
-        >
-          Submit quiz
-        </Button>
-      </Grid>
-    </Paper>
+            <Grid item xs={12} md={6} lg={9}>
+              <TextField
+                id="outlined-basic"
+                label="Guess word"
+                variant="standard"
+                value={userAnswers[index] || ""}
+                onChange={(e) => handleAnswerChange(index, e.target.value)}
+                sx={{
+                  width: { xs: "80%", sm: "60%", md: "100%" }, // Adjust the width for different screen sizes
+                  // Add margin for better spacing
+                }}
+              />
+            </Grid>
+          </Grid>
+        ))}
+      <Button
+        onClick={handleSubmit}
+        sx={{
+          marginLeft: 30,
+          marginRight: 30,
+          marginTop: 10,
+          marginBottom: 1,
+        }}
+        variant="contained"
+      >
+        Submit quiz
+      </Button>
+    </Grid>
   );
 };
 
