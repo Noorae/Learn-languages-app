@@ -1,0 +1,36 @@
+get http://localhost:8080/
+
+###
+get http://localhost:8080/api/languages/english
+
+###
+get http://localhost:8080/api/languages/swedish
+
+###
+get http://localhost:8080/api/languages/korean
+
+###
+get http://localhost:8080/api/languages/english/4
+
+###
+delete http://localhost:8080/api/languages/swedish/3
+
+###
+post http://localhost:8080/api/languages/english
+content-type: application/json
+
+{ "foreign_language": "bird", "fi": "lintu", "tag": "" }
+
+###
+
+post http://localhost:8080/api/users/signup
+content-type: application/json
+
+{ "username": "Ulla", "password": "shittyPassword", "role": "student"}
+
+###
+
+post http://localhost:8080/api/users/login
+content-type: application/json
+
+{ "username": "Ulla", "password": "shittyPassword", "role": "student"}
