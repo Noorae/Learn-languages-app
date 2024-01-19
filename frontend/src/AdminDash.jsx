@@ -128,6 +128,21 @@ export default function AdminDash() {
    */
   const [koreanData, setKoreanData] = useState([]);
   /**
+   * State variable for English language tags.
+   * @type {Array}
+   */
+  const [engTags, setEngTags] = useState([]);
+  /**
+   * State variable for Swedish language tags.
+   * @type {Array}
+   */
+  const [swedishTags, setSwedishTags] = useState([]);
+  /**
+   * State variable for Korean language tags.
+   * @type {Array}
+   */
+  const [koreanTags, setKoreanTags] = useState([]);
+  /**
    * State variable for chosen table language.
    * @type {Array}
    */
@@ -356,11 +371,6 @@ export default function AdminDash() {
             >
               Dashboard
             </Typography>
-            <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
           </Toolbar>
         </AppBar>
         <Drawer variant="permanent" open={open}>
@@ -435,22 +445,24 @@ export default function AdminDash() {
             >
               {/* The table */}
               <Grid item xs={12}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: "flex",
-                    flexDirection: "column",
-                    flexGrow: 1,
-                    minHeight: 600,
-                  }}
-                >
-                  <LanguageTable
-                    tableLang={tableLang}
-                    onUpdateTableLang={handleAddNewWords}
-                    onDeleteTableLang={handleDeleteWords}
-                    onEditTableLang={handleEditWords}
-                  />
-                </Paper>
+                {tableLang.length > 0 && (
+                  <Paper
+                    sx={{
+                      p: 2,
+                      display: "flex",
+                      flexDirection: "column",
+                      flexGrow: 1,
+                      minHeight: 600,
+                    }}
+                  >
+                    <LanguageTable
+                      tableLang={tableLang}
+                      onUpdateTableLang={handleAddNewWords}
+                      onDeleteTableLang={handleDeleteWords}
+                      onEditTableLang={handleEditWords}
+                    />
+                  </Paper>
+                )}
               </Grid>
             </Grid>
             <Copyright sx={{ pt: 4 }} />
