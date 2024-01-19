@@ -7,8 +7,15 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Home from "./Home.jsx";
 import PrivateWrapper from "./PrivateRoute";
 
+/**
+ * Root component of the application.
+ *
+ * @component
+ * @returns {JSX.Element} The root JSX element of the application.
+ */
 function App() {
   return (
+    //Use routes to access different parts of the application and private routes that require log in.
     <BrowserRouter>
       <Routes>
         <Route path="/signin" element={<SignIn />} />
